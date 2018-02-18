@@ -1,0 +1,241 @@
+	<form name="sophiaTestForm" novalidate="">
+		<div class="form-horizontal">
+			<div class="form-group">
+				<label class="control-label col-sm-4 col-md-3 col-lg-3">Safety Testing</label>
+				<div class="col-sm-6 col-md-5 col-lg-5">
+					<div class="btn-group wd-100">
+						<button type="button" class="btn ButtonDefault wd-50"
+							data-ng-disabled='true'
+							data-ng-class="{'Region-Select':createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.safetyTesting == value}"
+							data-ng-repeat="value in createRequest.yesNoList"
+							data-ng-click="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.safetyTesting = value;">{{value}}</button>
+						<!-- validateMandatory('generalClinicalSafetyForm') -->
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-4 col-md-3 col-lg-3">Tests Requested</label>
+				<div class="col-sm-6 col-md-5 col-lg-5">
+					<ui-select multiple="multiple" class="ui-select" name="testRequest" data-ng-disabled="true"
+						ng-model="createRequest.RCRRequest.AssessmentInformation.AcknowledgeInfoCA.typeOfTests">
+					<ui-select-match allow-clear="true" placeholder="Select Test Requested...">
+					<span>{{$item | removeSpaces}}</span></ui-select-match> <ui-select-choices
+						repeat="rtr in createRequest.test | filter: $select.search">
+					{{rtr| removeSpaces}} </ui-select-choices> </ui-select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-4 col-md-3 col-lg-3">Product Usage</label>
+				<div class="col-sm-6 col-md-5 col-lg-5">
+					<input class="form-control" name="productUsage"
+						data-ng-model="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.productUsage"></input>
+				</div>
+			</div>
+			
+				<div class="form-group">
+				<label class="control-label col-sm-4 col-md-3 col-lg-3">Sample Age</label>
+				<div class="col-sm-6 col-md-5 col-lg-5">
+					<ui-select id="sampleAge" data-ng-disabled="formulaRelatedFlag || disableAIFields"
+						data-ng-model="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.sampleAge" data-ng-required="createRequest.required"
+      data-on-select="validateMandatory('generalClinicalSafetyForm')">
+					<ui-select-match allow-clear="true" placeholder="Select Sample Age ..">
+					<span class="font-size">{{$select.selected}}</span></ui-select-match> <ui-select-choices
+						repeat="SA in createRequest.sampleAgeList  | filter: $select.search track by $index">
+					<span data-ng-bind="PT"></span></ui-select-choices> </ui-select>
+										</div>
+			</div>
+			
+				<div class="form-group">
+				<label class="control-label col-sm-4 col-md-3 col-lg-3">Batch Type</label>
+				<div class="col-sm-6 col-md-5 col-lg-5">
+					<ui-select id="batchType" data-ng-disabled="formulaRelatedFlag || disableAIFields"
+						data-ng-model="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.batchType" data-ng-required="createRequest.required"
+      data-on-select="validateMandatory('generalClinicalSafetyForm')">
+					<ui-select-match allow-clear="true" placeholder="Select Batch Type ..">
+					<span class="font-size">{{$select.selected}}</span></ui-select-match> <ui-select-choices
+						repeat="BT in createRequest.batchTypeList  | filter: $select.search track by $index">
+					<span data-ng-bind="BT"></span></ui-select-choices> </ui-select>
+										</div>
+			</div>
+			
+				<div class="form-group">
+				<label class="control-label col-sm-4 col-md-3 col-lg-3">SPF Test(s)</label>
+				<div class="col-sm-6 col-md-5 col-lg-5">
+					<ui-select id="spfTest" data-ng-disabled="formulaRelatedFlag || disableAIFields"
+						data-ng-model="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.spfTest" data-ng-required="createRequest.required"
+      data-on-select="validateMandatory('generalClinicalSafetyForm')">
+					<ui-select-match allow-clear="true" placeholder="Select SPF Test ..">
+					<span class="font-size">{{$select.selected}}</span></ui-select-match> <ui-select-choices
+						repeat="SPF in createRequest.spfTestList  | filter: $select.search track by $index">
+					<span data-ng-bind="SPF"></span></ui-select-choices> </ui-select>
+										</div>
+			</div>
+			
+				<div class="form-group">
+				<label class="control-label col-sm-4 col-md-3 col-lg-3">Test Protocol Number</label>
+				<div class="col-sm-6 col-md-5 col-lg-5">
+					<input class="form-control" name="testProtocolNumber"
+						data-ng-model="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.testProtocolNumber"></input>
+				</div>
+			</div>
+			
+				<div class="form-group">
+				<label class="control-label col-sm-4 col-md-3 col-lg-3">Request Completion Date</label>
+				<div class="col-sm-6 col-md-5 col-lg-5">
+					<input class="form-control" name="requestCompletionDate"
+						data-ng-model="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.requestCompletionDate"></input>
+				</div>
+			</div>
+			
+			
+				<div class="form-group">
+				<label class="control-label col-sm-4 col-md-3 col-lg-3">Batch Number<span
+					class="glyphicon glyphicon-asterisk ast-color"></span></label>
+				<div class="col-sm-6 col-md-5 col-lg-5">
+					<input class="form-control" name="batchNumber"
+						data-ng-model="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.batchNumber"></input>
+				</div>
+			</div>
+			
+				<div class="form-group">
+				<label class="control-label col-sm-4 col-md-3 col-lg-3">Batch Type<span
+					class="glyphicon glyphicon-asterisk ast-color"></span></label>
+				<div class="col-sm-6 col-md-5 col-lg-5">
+					<ui-select id="batchType" data-ng-disabled="formulaRelatedFlag || disableAIFields"
+						data-ng-model="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.batchType" data-ng-required="createRequest.required"
+      data-on-select="validateMandatory('generalClinicalSafetyForm')">
+					<ui-select-match allow-clear="true" placeholder="Select Batch Type ..">
+					<span class="font-size">{{$select.selected}}</span></ui-select-match> <ui-select-choices
+						repeat="BT in createRequest.batchTypeList  | filter: $select.search track by $index">
+					<span data-ng-bind="BT"></span></ui-select-choices> </ui-select>
+										</div>
+			</div>
+			
+				<div class="form-group">
+				<label class="control-label col-sm-4 col-md-3 col-lg-3">Sample Age<span
+					class="glyphicon glyphicon-asterisk ast-color"></span></label>
+				<div class="col-sm-6 col-md-5 col-lg-5">
+					<input class="form-control" name="sampleAge"
+						data-ng-model="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.sampleAge"></input>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="control-label col-sm-4 col-md-3 col-lg-3">Sample Submission Date<span
+					class="glyphicon glyphicon-asterisk ast-color"></span></label>
+				<div class="col-sm-6 col-md-5 col-lg-5">
+					<input class="form-control" name="sampleSubmissionDate"
+						data-ng-model="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.sampleSubmissionDate"></input>
+				</div>
+			</div>
+			
+				<div class="form-group">
+				<label class="control-label col-sm-4 col-md-3 col-lg-3">Manufacturing Date<span
+					class="glyphicon glyphicon-asterisk ast-color"></span></label>
+				<div class="col-sm-6 col-md-5 col-lg-5">
+					<input class="form-control" name="manufacturingDate"
+						data-ng-model="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.manufacturingDate"></input>
+				</div>
+			</div>
+			
+						<div class="form-group">
+				<label class="control-label col-sm-4 col-md-3 col-lg-3">Product Usage</label>
+				<div class="col-sm-6 col-md-5 col-lg-5">
+					<ui-select id="productUsage" data-ng-disabled="formulaRelatedFlag || disableAIFields"
+						data-ng-model="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.productUsage" data-ng-required="createRequest.required"
+      data-on-select="validateMandatory('generalClinicalSafetyForm')">
+					<ui-select-match allow-clear="true" placeholder="Select Product Usage ..">
+					<span class="font-size">{{$select.selected}}</span></ui-select-match> <ui-select-choices
+						repeat="PU in createRequest.productUsageList  | filter: $select.search track by $index">
+					<span data-ng-bind="PU"></span></ui-select-choices> </ui-select>
+										</div>
+			</div>
+			
+					<div class="form-group">
+				<label class="control-label col-sm-4 col-md-3 col-lg-3">Total Number Of Samples</label>
+				<div class="col-sm-6 col-md-5 col-lg-5">
+					<input class="form-control" name="totalNumberOfSamples"
+						data-ng-model="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.totalNumberOfSamples"></input>
+				</div>
+			</div>
+			
+						<div class="form-group">
+				<label class="control-label col-sm-4 col-md-3 col-lg-3">Sample Size</label>
+				<div class="col-sm-6 col-md-5 col-lg-5">
+					<input class="form-control" name="SampleSize"
+						data-ng-model="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.SampleSize"></input>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="control-label col-sm-4 col-md-3 col-lg-3">Target SPF(if applic)</label>
+				<div class="col-sm-6 col-md-5 col-lg-5">
+					<input class="form-control" name="targetSPF"
+						data-ng-model="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.targetSPF"></input>
+				</div>
+			</div>
+			
+				<div class="form-group">
+				<label class="control-label col-sm-4 col-md-3 col-lg-3">Target PFA/UVA</label>
+				<div class="col-sm-6 col-md-5 col-lg-5">
+					<input class="form-control" name="targetPFA"
+						data-ng-model="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.targetPFA"></input>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="control-label col-sm-4 col-md-3 col-lg-3">Non-Comedogenic?(if applic)</label>
+				<div class="col-sm-6 col-md-5 col-lg-5">
+					<div class="btn-group wd-100">
+						<button type="button" class="btn ButtonDefault wd-50"
+							data-ng-disabled="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.nonComedogenic == true || disableAIFields"
+							data-ng-class="{'Region-Select':createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.nonComedogenic == value}"
+							data-ng-repeat="value in createRequest.yesNoList"
+							data-ng-click="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.nonComedogenic  = value; validationCheck('RI');">{{value}}</button>
+					</div>
+				</div>
+			</div>
+			
+				<div class="form-group">
+				<label class="control-label col-sm-4 col-md-3 col-lg-3">Water Solubility(Y/N)<span
+					class="glyphicon glyphicon-asterisk ast-color"></span></label>
+				<div class="col-sm-6 col-md-5 col-lg-5">
+					<input class="form-control" name="waterSolubility"
+						data-ng-model="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.waterSolubility"></input>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="control-label col-sm-4 col-md-3 col-lg-3">Additional Info<span
+					class="glyphicon glyphicon-asterisk ast-color"></span></label>
+				<div class="col-sm-6 col-md-5 col-lg-5">
+					<input class="form-control" name="additionalInfo"
+						data-ng-model="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.additionalInfo"></input>
+				</div>
+			</div>
+			
+				<div class="form-group">
+				<label class="control-label col-sm-4 col-md-3 col-lg-3">Launch Region(If Gen Safety)</label>
+				<div class="col-sm-6 col-md-5 col-lg-5">
+					<input class="form-control" name="launchRegion"
+						data-ng-model="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.launchRegion"></input>
+				</div>
+			</div>
+			
+				<div class="form-group">
+				<label class="control-label col-sm-4 col-md-3 col-lg-3">Sci-Aff/Cli Safety Reviewer</label>
+				<div class="col-sm-6 col-md-5 col-lg-5">
+					<input class="form-control" name="CliSafetyReviewer"
+						data-ng-model="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.CliSafetyReviewer"></input>
+				</div>
+			</div>
+			
+				<div class="form-group">
+				<label class="control-label col-sm-4 col-md-3 col-lg-3">Tox Reviewer</label>
+				<div class="col-sm-6 col-md-5 col-lg-5">
+					<input class="form-control" name="toxReviewer"
+						data-ng-model="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.toxReviewer"></input>
+				</div>
+			</div>
+			</div>
+			</form>

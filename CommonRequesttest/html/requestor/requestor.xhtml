@@ -1,0 +1,76 @@
+<div data-ng-controller="createrequestController as createRequest" data-ng-init="createRequest.init();"> 
+	<div>
+		<div data-ng-show="isSetTab(1)">
+			<div id="parentDiv" style="height: 450px; overflow-y: auto; overflow-x: hidden;">
+				<div id="requestInfo" class="panel panel-default target">
+					<div class="panel-body">
+						<div class="row mr-0">
+							<div class="CreateSectionHeader col-sm-10">Request
+								Information</div>
+							<div class="col-sm-2">
+								<span class="glyphicon glyphicon-asterisk ast-color"></span>
+								Required Field
+							</div>
+						</div>
+						<div id="reqInfo">
+							<div data-ng-if="viewFlag"
+								data-ng-include="'/cg510_rcr_createrequest/Core/html/requestInformationViewPage.xhtml'"></div>
+							<div data-ng-if="!(viewFlag)"
+								data-ng-include="'/cg510_rcr_createrequest/Core/html/requestInformation.xhtml'"></div>
+						</div>
+					</div>
+				</div>
+				<div id="assessInfo" class=" panel panel-default target">
+					<div class="panel-body">
+						<div class="row mr-0">
+							<div class="CreateSectionHeader col-sm-10">Assessment
+								Information</div>
+							<div class="col-sm-2">
+								<span class="glyphicon glyphicon-asterisk ast-color"></span>
+								Required Field
+							</div>
+						</div>
+						<div id="assessmentInfo">
+							<div>
+								<div
+									data-ng-include="'/cg510_rcr_createrequest/Core/html/formulationReview/formulationReview.xhtml'"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<!-- ********** Right tab section ************* -->
+	<div class="col-sm-4 col-md-4 col-lg-4 navbar navbar-fixed-top"
+		style="margin: 25% 67%;">
+		<div class="rightSection">
+			<ul class="listStyle nav nav-pills nav-stacked">
+				<li class="requestInfo" data-ng-click="scroll('#requestInfo')"
+					data-ng-class="(activeTab=='#requestInfo'||activeTab==undefined) ? 'active-status' : ''">Request
+					Information<span data-ng-show="RIFlag"
+					class="glyphicon glyphicon-ok" style="float: right;"></span>
+				</li>
+				<li class="assessInfo" data-ng-click="scroll('#assessInfo')"
+					data-ng-class="(activeTab=='#assessInfo') ? 'active-status' : ''">Assessment
+					Information<span data-ng-show="AIFlag"
+					class="glyphicon glyphicon-ok" style="float: right;"></span>
+				</li>
+			</ul>
+		</div>
+		<div style="float: right;" data-ng-show="approvedFlag">
+			<button class="jj_primary_button" data-ng-if="!(viewFlag)"
+				data-ng-disabled="!(createRequest.maxInputlengthCheck)"
+				data-ng-click="createRequest.saveRCR(createRequest.RCRRequest);">Save</button>
+			<button class="jj_primary_button" data-ng-if="viewFlag"
+				data-ng-click="changeView()">Edit</button>
+			<button class="jj_primary_button" data-ng-if="!(createRequest.RCRRequest.RequestInformation.projectStatus!='New')"
+				data-ng-disabled="!(RIFlag &amp;&amp; AIFlag &amp;&amp; createRequest.maxInputlengthCheck)"
+				data-ng-click="createRequest.submitRCR(createRequest.RCRRequest, 'request');">Submit</button>
+			<button class="jj_secondary_button" data-ng-if="hideButtons"
+				data-ng-click="createRequest.cancel(createRequest.RCRRequest)">Cancel</button>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,61 @@
+
+<!-- <div class="modal-body"> -->
+	<div>
+		<form class="form-horizontal" name="requestInfoForm">
+			<div class="form-group">
+				<label class="control-label col-sm-3">Send
+					To<span
+					class="glyphicon glyphicon-asterisk ast-color"></span> :</label>
+				<div class="col-sm-6">
+					<div class="form-group">
+						<ui-select data-ng-model="info.to">
+						<ui-select-match allow-clear="true" placeholder="Select Send To ..">
+						<span>{{$select.selected.displayName}}</span></ui-select-match> <ui-select-choices
+							repeat="user in sendTo | filter: $select.search  track by $index">
+						<span data-ng-bind="user.displayName" class="font-size"></span></ui-select-choices>
+						</ui-select>
+					</div>
+					<!-- <div data-ng-hide="true">
+						<input
+							data-ng-model="requestInfoInput.requestInfo.to.ntId"
+							required="required" name="sendToName"></input>
+					</div> -->
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-3">Requestor :</label>
+				<div class="col-sm-6 pd-0">
+					<label
+						data-ng-bind="createRequest.loggedInUser.displayName"></label>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-3">Comments<span
+					class="glyphicon glyphicon-asterisk ast-color"></span>
+					:</label>
+				<div class="col-sm-6 pd-0">
+					<textarea class="form-control" rows="5"
+						name="requestInfoComment"
+						data-ng-model="info.comment"
+						data-ng-maxlength="createRequest.maxInputArealength" required="required"></textarea>
+					<p
+						data-ng-show="requestInfoForm.requestInfoComment.$error.maxlength"
+						class="help-block">Maximum length of {{createRequest.maxInputArealength}}
+						character exceeded.</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<div style="text-align: right !important;">
+						<button type="button" class="jj_primary_button"
+							data-dismiss="modal" data-ng-click="createRequest.requestInfo(createRequest.RCRRequest)"
+							data-ng-disabled="requestInfoForm.$invalid">Request
+							Info</button>
+						<button type="button" class="jj_secondary_button"
+							data-dismiss="modal" data-ng-click="createRequest.closeRequestInfo()">Close</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+<!-- </div> -->

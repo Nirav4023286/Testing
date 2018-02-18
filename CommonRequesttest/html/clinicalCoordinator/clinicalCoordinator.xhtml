@@ -1,0 +1,166 @@
+<div data-ng-controller="createrequestController as createRequest"
+	data-ng-init="createRequest.init();">
+	<form name="coordinatorForm">
+		<div id="parentDiv" style="height: 450px; overflow-y: auto;">
+
+			<!-- ******************** Acknowledge Draft ******************** -->
+			<div id="acknowledge" class="panel panel-default target"
+				data-ng-if="coordinatorFlag">
+
+				<div class="panel-body">
+					<div class="row mr-0">
+						<div class="CreateSectionHeader col-sm-10">Acknowledge</div>
+						<div class="col-sm-2">
+							<span class="glyphicon glyphicon-asterisk ast-color"></span>
+							Required Field
+						</div>
+					</div>
+					<div id="ackReq">
+						<div class="form-group row">
+							<label class="control-label col-sm-3">Clinical
+								Coordinator </label>
+							<div class="col-sm-5">
+								<ui-select id="clinicalCoordinator" required="true"
+									ui-select-required="clinicalCoordinatorFlag"
+									data-ng-disabled="(coordinatorForm.$valid &amp;&amp;
+									createRequest.tempAckCoordinatorObject.assessor!='' &amp;&amp; 
+									createRequest.tempAckCoordinatorObject.assessor!=undefined &amp;&amp; createRequest.tempAckCoordinatorObject.assessor!=null)"
+									data-ng-model="createRequest.tempAckCoordinatorObject.coordinator">
+								<ui-select-match allow-clear="true" placeholder="Select a Clinical Coordinator ..">
+								<span class="font-size">{{$select.selected.displayName}}</span></ui-select-match>
+								<ui-select-choices
+									repeat="coordinator in createRequest.spliceUser(createRequest.RCRRequest.ClinicalCoordinatorList) | filter: $select.search">
+								<span data-ng-bind="coordinator.displayName"></span></ui-select-choices> </ui-select>
+
+								<!-- <input type="text" class="form-control input-style"
+									name="clinicalCoordinator" required="required"
+									data-ng-model="createRequest.RCRRequest.ClinicalCoordinator"
+									data-typeahead-editable="false"
+									value="createRequest.RCRRequest.ClinicalCoordinator.displayName"
+									data-typeahead="coordinator as coordinator.displayName for coordinator in createRequest.RCRRequest.ClinicalCoordinatorList | filter:$viewValue | limitTo:8"
+									data-ng-pattern="" autocomplete="off"></input>
+								<div
+									data-ng-show="requestInformationForm.clinicalCoordinator.$invalid"
+									style="color: red">Select from List</div> -->
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="control-label col-sm-3">Clinical Assessor </label>
+							<div class="col-sm-5">
+								<ui-select id="clinicalAssessor"
+									ui-select-required="clinicalAssessorFlag"
+									data-ng-model="createRequest.tempAckCoordinatorObject.assessor">
+								<ui-select-match allow-clear="true" placeholder="Select a Clinical Assessor ..">
+								<span class="font-size">{{$select.selected.displayName}}</span></ui-select-match>
+								<ui-select-choices
+									repeat="ca in createRequest.caList | filter: $select.search">
+								<span data-ng-bind="ca.displayName"></span></ui-select-choices> </ui-select>
+									<!-- data-ng-model="createRequest.RCRRequest.ClinicalAssessor" -->
+								<!-- <input type="text" class="form-control input-style"
+									name="clinicalAssessor" required="required"
+									data-ng-model="createRequest.RCRRequest.ClinicalAssessor"
+									data-typeahead-editable="false"
+									value="createRequest.RCRRequest.ClinicalAssessor.displayName"
+									data-typeahead="ca as ca.displayName for ca in createRequest.caList | filter:$viewValue | limitTo:8"
+									data-ng-pattern="" autocomplete="off"></input>
+								<div
+									data-ng-show="requestInformationForm.clinicalAssessor.$invalid"
+									style="color: red">Select from List</div> -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- ******************** Request Information ******************** -->
+			<div id="requestInfo" class="panel panel-default target">
+				<div class="panel-body">
+					<div class="row mr-0">
+						<div class="CreateSectionHeader col-sm-10">Request
+							Information</div>
+						<div class="col-sm-2">
+							<span class="glyphicon glyphicon-asterisk ast-color"></span>
+							Required Field
+						</div>
+					</div>
+					<div id="reqInfo">
+						<div
+							data-ng-include="'/cg510_rcr_createrequest/Core/html/requestInformationViewPage.xhtml'"></div>
+					</div>
+				</div>
+			</div>
+
+			<!-- ******************** Assessment Information ******************** -->
+			<div id="assessInfo" class=" panel panel-default target">
+				<div class="panel-body">
+					<div class="row mr-0">
+						<div class="CreateSectionHeader col-sm-10">Assessment
+							Information</div>
+						<div class="col-sm-2">
+							<span class="glyphicon glyphicon-asterisk ast-color"></span>
+							Required Field
+						</div>
+					</div>
+					<div id="assessmentInfo">
+						<div
+							data-ng-include="'/cg510_rcr_createrequest/Core/html/formulationReview/formulationReview.xhtml'"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- ********** Right tab section ************* -->
+		<div class="col-sm-4 col-md-4 col-lg-4 navbar navbar-fixed-top"
+			style="margin: 25% 67%;">
+			<div class="rightSection">
+				<ul class="listStyle nav nav-pills nav-stacked">
+					<li class="acknowledge" data-ng-click="scroll('#acknowledge')" data-ng-show="coordinatorFlag"
+						data-ng-class="(activeTab=='#acknowledge'||activeTab==undefined) ? 'active-status' : ''">Acknowledge
+						<span
+						data-ng-show="(createRequest.RCRRequest.ClinicalAssessor!='' &amp;&amp; 
+									createRequest.tempAckCoordinatorObject.assessor!='' &amp;&amp; 
+									createRequest.tempAckCoordinatorObject.assessor!=undefined) &amp;&amp; (createRequest.RCRRequest.ClinicalCoordinator!='' &amp;&amp; 
+									createRequest.tempAckCoordinatorObject.coordinator!='' &amp;&amp; 
+									createRequest.tempAckCoordinatorObject.coordinator!=undefined)"
+						class="glyphicon glyphicon-ok" style="float: right;"></span>
+					</li>
+					<li class="requestInfo" data-ng-click="scroll('#requestInfo')"
+						data-ng-class="(activeTab=='#requestInfo') ? 'active-status' : ''">Request
+						Information<span data-ng-show="RIFlag"
+						class="glyphicon glyphicon-ok" style="float: right;"></span>
+					</li>
+					<li class="assessInfo" data-ng-click="scroll('#assessInfo')"
+						data-ng-class="(activeTab=='#assessInfo') ? 'active-status' : ''">Assessment
+						Information<span data-ng-show="AIFlag"
+						class="glyphicon glyphicon-ok" style="float: right;"></span>
+					</li>
+				</ul>
+			</div>
+			<div style="float: right;" data-ng-if="approvedFlag">
+			<div data-ng-if="hideButtons">
+			<button class="jj_primary_button"
+					data-ng-disabled="(coordinatorForm.$invalid) || ((createRequest.RCRRequest.ClinicalAssessor != '' &amp;&amp;createRequest.RCRRequest.ClinicalAssessor !=null) &amp;&amp;(createRequest.tempAckCoordinatorObject.assessor=='' || createRequest.tempAckCoordinatorObject.assessor==null))"
+     data-ng-click="createRequest.acknowledgeCoordinator(createRequest.tempAckCoordinatorObject);">Submit</button>
+				<button class="jj_secondary_button"  data-target="#RequestInfo" data-toggle="modal">Request Info</button>
+			</div>
+				<!-- <button class="jj_primary_button"
+					data-ng-disabled="!(createRequest.maxInputlengthCheck)"
+					data-ng-click="createRequest.saveRCR(createRequest.RCRRequest);">Save</button> -->
+				
+				<!-- data-ng-click="createRequest.sendToFunction();" -->
+			</div>
+		</div>
+	</form>
+	<div  class="modal" role="dialog" style="text-align: left !important;" id="RequestInfo" tabindex="-1">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Request Additional Info</h4>
+				</div>
+				<div class="modal-body">
+					<div data-ng-include="'/cg510_rcr_createrequest/Core/html/requestInfo.xhtml'"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,131 @@
+<div data-ng-controller="requestInformationController as reqInfo"
+	data-ng-init="createRequest.datePickerInit();createRequest.viewPageValidation();">
+	<form class="form-horizontal" name="InformationForm">
+		<div class="form-group row">
+			<label class="control-label col-sm-3">Requestor's Name<span
+				class="glyphicon glyphicon-asterisk ast-color"></span></label>
+			<div class="col-sm-5 pd-top-7">
+				<i class="glyphicon glyphicon-user" style="margin-right: 10px"></i><span>{{createRequest.RCRRequest.Requestor.displayName}}</span>
+			</div>
+		</div>
+		<div class="form-group row">
+			<label class="control-label col-sm-3">Requestor's Email<span
+				class="glyphicon glyphicon-asterisk ast-color"></span></label>
+			<div class="col-sm-5 pd-top-7">
+				<i class="glyphicon glyphicon-envelope" style="margin-right: 10px"></i><span>{{createRequest.RCRRequest.Requestor.email}}</span>
+			</div>
+		</div>
+		<div class="form-group row">
+			<label class="control-label col-sm-3">Requestor's Region<span
+				class="glyphicon glyphicon-asterisk ast-color"></span></label>
+			<div class="col-sm-5 pd-top-7">
+				<i class="glyphicon glyphicon-globe" style="margin-right: 10px"></i><span>{{createRequest.RCRRequest.Requestor.region}}</span>
+			</div>
+		</div>
+		<div class="form-group row">
+			<label class="control-label col-sm-3">Date Submitted</label>
+			<div class="col-sm-5 pd-top-7">
+				<i class="glyphicon glyphicon-calendar" style="margin-right: 10px"></i><span>{{createRequest.RCRRequest.RequestInformation.submittedDate
+					| date :'dd-MMM-yyyy'}}</span>
+			</div>
+
+		</div>
+		<div class="form-group row">
+			<label class="control-label col-sm-3">Due Date</label>
+			<div class="col-sm-5 pd-top-7">
+				<i class="glyphicon glyphicon-calendar" style="margin-right: 10px"></i><span data-ng-bind="(createRequest.RCRRequest.AcknowledgeInfoCA.commitmentDate!=null&amp;&amp;createRequest.RCRRequest.AcknowledgeInfoCA.commitmentDate!='')?(createRequest.RCRRequest.AcknowledgeInfoCA.commitmentDate| date:'dd-MMM-yyyy'):(createRequest.RCRRequest.RequestInformation.dueDate| date:'dd-MMM-yyyy')"></span>
+			</div>
+		</div>
+		<hr></hr>
+		<div class="form-group row">
+			<label class="control-label col-sm-3">Clinical Assessor </label>
+			<div class="col-sm-5 pd-top-7">
+				<span>{{createRequest.RCRRequest.ClinicalAssessor.displayName}}</span>
+			</div>
+		</div>
+		<div class="form-group row"
+			data-ng-if="createRequest.RCRRequest.ClinicalAssessor.ntId == '' || createRequest.RCRRequest.ClinicalAssessor.ntId == undefined">
+			<label class="control-label col-sm-3">Co-ordinator </label>
+			<div class="col-sm-5 pd-top-7">
+				<span>{{createRequest.RCRRequest.ClinicalCoordinator.displayName}}</span>
+			</div>
+		</div>
+		<hr></hr>
+		<div class="form-group row">
+			<div class="col-sm-3">
+				<label>This is a R&amp;D Link Project </label>
+			</div>
+			<div class="col-sm-5" style="top: -5px;">
+				<!-- <span>{{createRequest.RCRRequest.RequestInformation.isRnD}}</span> -->
+				<div class="checkbox" style="padding-top: 0px;">
+						<input type="checkbox" data-ng-disabled="true"
+							style="height: 20px; width: 20px;"
+							data-ng-model="createRequest.RCRRequest.RequestInformation.isRnD"
+							data-ng-click="createRequest.RCRRequest.RequestInformation.projectName = ''; validationCheck('RI')" autocomplete="off"></input>
+					</div>
+			</div>
+		</div>
+		<div class="form-group row">
+			<label class="control-label col-sm-3">Project Name</label>
+			<div class="col-sm-5 pd-top-7">
+				<span class="textWrap">{{createRequest.RCRRequest.RequestInformation.projectName}}</span>
+			</div>
+		</div>
+		<div class="form-group row">
+			<label class="control-label col-sm-3">Region<span
+				class="glyphicon glyphicon-asterisk ast-color"></span></label>
+			<div class="col-sm-5 pd-top-7">
+				<span>{{createRequest.RCRRequest.RequestInformation.region}}</span>
+			</div>
+		</div>
+		<div class="form-group row"
+			data-ng-show="createRequest.RCRRequest.RequestInformation.region == 'Regional'">
+			<div class="col-sm-3"></div>
+
+			<div class="col-sm-5 well">
+				<div class="form-group mg-0">
+					<label>Lead Region :</label>
+						<span>{{createRequest.RCRRequest.RequestInformation.leadRegion}}</span>
+				</div>
+				<label>Additional Selected regions :</label>
+				<div>
+					<span
+						data-ng-text-truncate="createRequest.convertToString(createRequest.RCRRequest.RequestInformation.additionalRegion)"
+						data-ng-tt-no-toggling="" data-ng-tt-chars-threshold="100"
+						title="{{createRequest.convertToString(createRequest.RCRRequest.RequestInformation.additionalRegion)}}"></span>
+				</div>
+
+			</div>
+		</div>
+		<div class="form-group row">
+			<label class="control-label col-sm-3">Direct Import<span
+				class="glyphicon glyphicon-asterisk ast-color"></span></label>
+			<div class="col-sm-5 pd-top-7">
+				<span>{{createRequest.RCRRequest.RequestInformation.directImport}}</span>
+			</div>
+		</div>
+		<div class="form-group row">
+			<label class="control-label col-sm-3">Product Development<span
+				class="glyphicon glyphicon-asterisk ast-color"></span></label>
+			<div class="col-sm-5 pd-top-7">
+				<span>{{createRequest.RCRRequest.RequestInformation.productDevelopment}}</span>
+			</div>
+		</div>
+		<div class="form-group row">
+			<label class="control-label col-sm-3">Franchise<span
+				class="glyphicon glyphicon-asterisk ast-color"></span></label>
+			<div class="col-sm-5 pd-top-7">
+				<span>{{createRequest.RCRRequest.RequestInformation.franchise}}</span>
+			</div>
+		</div>
+		<div class="form-group row">
+			<label class="control-label col-sm-3">Brand</label>
+			<div class="col-sm-5 pd-top-7">
+				<span
+					data-ng-text-truncate="createRequest.convertToString(createRequest.RCRRequest.RequestInformation.Brand)"
+					data-ng-tt-no-toggling="" data-ng-tt-chars-threshold="100"
+					title="{{createRequest.convertToString(createRequest.RCRRequest.RequestInformation.Brand)}}"></span>
+			</div>
+		</div>
+	</form>
+</div>

@@ -1,0 +1,346 @@
+border-right: 1px solid #aaa;
+	background: #ECECEC;
+/*
+ * ========================================================================
+ * Added by Reeth with ref to Create RTR Section  27-02-1017   
+ * ========================================================================
+ */
+@CHARSET "ISO-8859-1";
+
+
+/* =====================================768=============================== */
+:root { 
+	--white: #ffffff; 
+	--charcoal: #4d4e4e; 
+	--lightgrey: #fafafa; 
+	--sunshineyellow: #d92e2c; 
+	--navyBlue: #00628f;
+	--sunshineyellow :#E7A000;
+	--gray :#aaa;
+	--offWhite:#ECECEC;
+	--lightwhite:#f5f5f5;
+	--rightRibbonInactive:#ddd;
+}
+
+.cutomPreTag{
+	border: none;
+	padding: 0px;
+	background: white;
+	font-family: AkzidenzGroteskStd;
+}
+
+.inner-addon {
+  position: relative;
+}
+
+/ style glyph /
+.inner-addon .glyphicon {
+  position: absolute;
+  padding: 7px;
+  pointer-events: none;
+}
+
+/ align glyph /
+.left-addon .glyphicon  { left:  0px;}
+.right-addon .glyphicon { right: 0px;}
+
+/ add padding  /
+.left-addon input  { padding-left:  30px; }
+.right-addon input { padding-right: 30px; }
+
+
+.CreateSectionHeader {
+	font-family: AkzidenzGroteskStd;
+	font-size: 21px;
+	font-weight: 300;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: 1.67;
+	letter-spacing: normal;
+	margin-bottom: 15px;
+	color: #4d4e4e;
+	color: var(-    -Charcoal);
+}
+
+.form-horizontal .control-label {
+	text-align: left;
+}
+
+.disabledHyperLink {
+   pointer-events: none;
+   cursor: default;
+}
+
+.Group {
+	padding-right: 15px !important;
+	padding-left: 15px !important;
+}
+
+.pd-top-7 {
+	padding-top: 7px;
+}
+
+.wd-50 {
+	width: 50%;
+}
+
+.wd-33 {
+	width: 33.33%;
+}
+
+.wd-100 {
+	width: 100%;
+}
+
+.mg-0 {
+	margin: 0px !important;
+}
+
+.dropdownSection {
+	background-color: transparent;
+	border-color: #cccccc;
+}
+
+.Region-Select{
+	background-color: var(--sunshineyellow) !important;
+	color: var(--white) !important;
+	font-size: 13px;
+}
+
+.ProductDevelopment-Select{
+	background-color: var(--sunshineyellow) !important;
+	color: var(--white) !important;
+	font-size: 13px;
+}
+
+.ButtonDefault{
+	background-color: transparent;
+    border: 1px solid #ccc;
+    color: var(--charcoal);
+    font-size: 13px;
+}
+
+.rightSection{
+	border-right: 1px solid var(--grey);
+	background: var(--offWhite);
+	margin-bottom: 5px;
+}
+.rightSection ul li {
+	line-height: 22px;
+	height: 40px;
+	padding: 10px;
+	border-bottom: 1px solid #aaa;
+	border-left: 12px solid #aaa;
+	background: var(--rightRibbonInactive);
+	margin: 0px;
+}
+.rightSection ul li:hover {
+	background: var(--white);
+	cursor: pointer
+}
+
+.rightSection ul li.active-status {
+	border-left: 12px solid #019ed1;
+	background: #01628F;
+	color: white;
+}
+
+.rightSection ul li.active-status span {
+	color: var(--white);
+}
+
+.listStyle{
+	list-style: none;
+	padding: 0px;
+}
+
+.wd-90{
+	width: 90%;
+}
+.wd-100{
+	width: 100%;
+}
+
+.jj_primary_button {
+	background-color: var(--appColor) !important;
+	color: #fff;
+	border: 1px solid var(--appColor);
+	border-radius: 5px;
+	padding: 6px 15px 8px 15px;
+	outline: none;
+}
+
+.jj_primary_button:hover {
+	background-color: var(--sunshineyellow) !important;
+	color: #fff;
+	text-decoration: none;
+}
+
+.jj_primary_button:active {
+	background-color: var(--sunshineyellow) !important;
+}
+
+.jj_primary_button[disabled],.jj_primary_button[disabled]:hover {
+	background-color: rgba(1, 98, 143, .2); color : #fff; border : 0px;
+	cursor: not-allowed;
+	color: #fff;
+	border: 0px;
+}
+
+.jj_secondary_button {
+	background-color: #fff;
+	color: #4D4E4E;
+	border: 1px solid #B3B3B3;
+	border-radius: 5px;
+	padding: 6px 15px 8px 15px;
+	outline: none;
+}
+
+.jj_secondary_button:hover {
+	color: #01628F;
+	background-color: #fff;
+	text-decoration: none;
+}
+
+.jj_secondary_button:active {
+	background-color: #f5f5f5;
+}
+
+.jj_secondary_button[disabled],.jj_secondary_button[disabled]:hover {
+	border: 1px solid rgba(77, 78, 78, .2);
+	background-color: #fff;
+	color: rgba(77, 78, 78, .2);
+	cursor: not-allowed;
+}
+
+.font-size{
+	font-size: 14px;
+}
+
+.wd-98{
+	width: 98%;
+}
+
+.help-block {
+	color: red !important;
+	margin-bottom: 5px !important;
+}
+
+
+.text-muted{
+	font-size: 14px;
+}
+
+.pencil-padding{
+	padding-right: 20px;
+}
+
+.ackButtons{
+	height: 35px;
+    width: 162px;
+    font-size: 12px;
+}
+
+.textWrap{
+	word-wrap: break-word;
+}
+
+.center-block {
+    float: none;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.input-group .icon-addon .form-control {
+    border-radius: 0;
+}
+
+.icon-addon {
+    position: relative;
+    color: #555;
+    display: block;
+}
+
+.icon-addon:after,
+.icon-addon:before {
+    display: table;
+    content: " ";
+}
+
+.icon-addon:after {
+    clear: both;
+}
+
+.icon-addon.addon-md .glyphicon,
+.icon-addon .glyphicon, 
+.icon-addon.addon-md .fa,
+.icon-addon .fa {
+    position: absolute;
+    z-index: 2;
+    left: 10px;
+    font-size: 14px;
+    width: 20px;
+    margin-left: -2.5px;
+    text-align: center;
+    padding: 10px 0;
+    top: 1px
+}
+
+.icon-addon.addon-lg .form-control {
+    height: 35px;
+    font-size: 14px;
+}
+
+.icon-addon.addon-sm .form-control {
+    height: 30px;
+    padding: 5px 10px 5px 28px;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.icon-addon.addon-lg .fa,
+.icon-addon.addon-lg .glyphicon {
+    font-size: 14px;
+    margin-left: 0;
+    left: 11px;
+}
+
+.icon-addon.addon-md .form-control,
+.icon-addon .form-control {
+    padding-left: 30px;
+    float: left;
+    font-weight: normal;
+}
+
+.icon-addon.addon-sm .fa,
+.icon-addon.addon-sm .glyphicon {
+    margin-left: 0;
+    font-size: 12px;
+    left: 5px;
+    top: -1px
+}
+
+.icon-addon .form-control:focus + .glyphicon,
+.icon-addon:hover .glyphicon,
+.icon-addon .form-control:focus + .fa,
+.icon-addon:hover .fa {
+    color: #2580db;
+}
+
+input[type="search"] {
+    -webkit-appearance: none;
+    cursor: pointer !important;
+}
+
+.form-view-value {
+	margin-top: 5px;
+}
+
+ hr {
+       border-top: 1px solid #ccc;
+  }
+  
+  .r-pd{
+      padding-left:0px;
+}
+ 

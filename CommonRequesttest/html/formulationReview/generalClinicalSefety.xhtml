@@ -1,0 +1,433 @@
+<div data-ng-init="createRequest.setViewOnRole()">
+	<form name="generalClinicalSafetyForm" novalidate="">
+		<div class="form-horizontal">
+			<div class="form-group">
+				<label class="col-sm-4 col-md-3 col-lg-3">Assessment Type<span
+					class="glyphicon glyphicon-asterisk ast-color"></span></label>
+				<div class="col-sm-6 col-md-5 col-lg-5">
+					<span>{{::createRequest.RCRRequest.AssessmentInformation.assessmentType}}</span>
+				</div>
+				 <div class="col-sm-2 col-md-4 col-lg-4">
+                                </div>
+				
+			</div>
+			<div class="form-group">
+				<label class="col-sm-4 col-md-3 col-lg-3">Sub-Type<span
+					class="glyphicon glyphicon-asterisk ast-color"></span></label>
+				<div class="col-sm-6 col-md-5 col-lg-5">
+					<span>{{::createRequest.RCRRequest.AssessmentInformation.assessmentSubType}}</span>
+				</div>
+				 <div class="col-sm-2 col-md-4 col-lg-4">
+                                </div>
+			</div>
+			<hr></hr>
+			<div class="form-group">
+				<label class="control-label col-sm-4 col-md-3 col-lg-3">Human Testing</label>
+				<div class="col-sm-6 col-md-5 col-lg-5">
+					<div class="btn-group wd-100">
+						<button type="button" class="btn ButtonDefault wd-50"
+							data-ng-disabled="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.humanTesting == true || disableAIFields"
+							data-ng-class="{'Region-Select':createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.humanTesting == value}"
+							data-ng-repeat="value in createRequest.humanTestList"
+							data-ng-click="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.humanTesting = value;">{{value}}</button>
+					</div>
+				</div>
+				<div class="col-sm-2 col-md-4 col-lg-4 hidden-sm" data-ng-init="(createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.humanTesting == 'Does not apply')?createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.humanTesting=true:''">
+					<input type="checkbox" style="margin-top: 14px;" data-ng-disabled="disableAIFields"
+						data-ng-model="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.humanTesting">
+					</input><span style="position: absolute; top: 13px;">Does not apply</span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-4 col-md-3 col-lg-3">Length of Study</label>
+				<div class="col-sm-6 col-md-5 col-lg-5">
+					<select class="form-control" id="lengthOfStudy" data-ng-disabled="disableAIFields"
+						data-ng-model="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.lengthOfStudy"
+						data-ng-options="study for study in createRequest.studyList">
+						<option value="">Select Length of Study ..</option>
+					</select>
+				</div>
+				 <div class="col-sm-2 col-md-4 col-lg-4">
+                                </div>
+			</div>
+			<hr></hr>
+			<div class="form-group">
+				<label class="control-label col-sm-4 col-md-3 col-lg-3">Formula ID Number<span
+					class="glyphicon glyphicon-asterisk ast-color"></span></label>
+				<div class="col-sm-6 col-md-5 col-lg-5">
+					<!-- <input type="text" class="form-control input-style"
+						name="formulaIDNumber"
+						data-ng-model="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.formulaIDNumber"
+						data-typeahead-editable="true"
+						data-typeahead="formula for formula in createRequest.formulaList | filter:$viewValue | limitTo:8"
+						data-ng-pattern="" autocomplete="off" data-ng-change="validateMandatory('generalClinicalSafetyForm')" data-ng-required="true"></input> -->
+
+					<!-- <div>If Formula ID does not exist please enter Lab notebook
+						number</div> -->
+					<input type="text" class="form-control input-style"
+						name="formulaIDNumber" required="required"
+						data-ng-model="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.formulaIDNumber"
+						data-ng-disabled="formulaRelatedFlag || disableAIFields" autocomplete="off"></input>
+				</div>
+				<div class="col-md-4 col-lg-4 hidden-sm" style="padding-top: 10px;">
+					<!-- <button class="jj_primary_button" data-ng-disabled="true"
+						data-ng-click="extractFormula(createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.formulaIDNumber)">Extract</button> -->
+					<a style="margin-right: 10px; cursor: pointer;" 
+						data-ng-class="(createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.formulaIDNumber == '' || createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.formulaIDNumber == null || disableAIFields) ? 'disabledHyperLink':''"
+						data-ng-click="createRequest.extractFormula(createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.formulaIDNumber)">Extract</a>
+					<a style="margin-right: 10px;cursor: pointer;" 
+						data-ng-class="(createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.formulaIDNumber == '' || createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.formulaIDNumber == null || disableAIFields) ? 'disabledHyperLink':''"
+						data-ng-click="createRequest.clearFormulaDetails('generalClinicalSafety')">Clear</a>
+					<!-- <a 
+						data-ng-disabled="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.formulaIDNumber==''"
+						data-ng-click="createRequest.resetFormulaDetails()">Reset</a> -->
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-4 col-md-3 col-lg-3">Lab Notebook Number</label>
+				<div class="col-sm-6 col-md-5 col-lg-5">
+					<!-- <input type="text" class="form-control input-style"
+		     name="labNotebookNumber"
+		     data-ng-model="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.labNotebookNumber"
+		     data-typeahead-editable="true"
+		     data-typeahead="LNN for LNN in createRequest.labNoteNumList | filter:$viewValue | limitTo:8"
+		     data-ng-pattern="" autocomplete="off" data-ng-maxlength="createRequest.maxInputlength" ></input> -->
+					<input class="form-control" name="labNotebookNumber"
+						data-ng-model="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.labNotebookNumber"
+						data-ng-disabled="formulaRelatedFlag || formulaEmptyFlag || disableAIFields"
+						data-ng-maxlength="createRequest.maxInputlength" autocomplete="off"
+						data-ng-change="createRequest.validateMaxLengthCheck(generalClinicalSafetyForm.labNotebookNumber.$error.maxlength, 'labNotebookNumber');"></input>
+					<p
+						data-ng-show="generalClinicalSafetyForm.labNotebookNumber.$error.maxlength"
+						class="help-block">Maximum length of
+						{{createRequest.maxInputlength}} character exceeded.</p>
+				</div>
+				 <div class="col-sm-2 col-md-4 col-lg-4">
+                                </div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-4 col-md-3 col-lg-3">Product Name</label>
+				<div class="col-sm-6 col-md-5 col-lg-5">
+					<input class="form-control" name="productName"
+						data-ng-model="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.productName"
+						data-ng-maxlength="createRequest.maxInputlength"
+						data-ng-change="createRequest.validateMaxLengthCheck(generalClinicalSafetyForm.productName.$error.maxlength, 'productName');"
+						data-ng-disabled="formulaRelatedFlag || disableAIFields" autocomplete="off"></input>
+					<p
+						data-ng-show="generalClinicalSafetyForm.productName.$error.maxlength"
+						class="help-block">Maximum length of
+						{{createRequest.maxInputlength}} character exceeded.</p>
+				</div>
+				 <div class="col-sm-2 col-md-4 col-lg-4">
+                                </div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-4 col-md-3 col-lg-3">Pre-Assessment</label>
+				<div class="col-sm-6 col-md-5 col-lg-5">
+					<div class="btn-group wd-100">
+						<button type="button" class="btn ButtonDefault wd-50"
+							data-ng-disabled="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.preAssessment == true || disableAIFields"
+							data-ng-class="{'Region-Select':createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.preAssessment == value}"
+							data-ng-repeat="value in createRequest.yesNoList"
+							data-ng-click="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.preAssessment = value; validationCheck('RI');">{{value}}</button>
+					</div>
+				</div>
+				 <div class="col-sm-2 col-md-4 col-lg-4">
+                                </div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-4 col-md-3 col-lg-3">Product Type<span
+					class="glyphicon glyphicon-asterisk ast-color"></span></label>
+				<div class="col-sm-6 col-md-5 col-lg-5">
+					<ui-select id="productType" data-ng-disabled="formulaRelatedFlag || disableAIFields"
+						data-ng-model="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.productType" data-ng-required="createRequest.required">
+					<ui-select-match allow-clear="true" placeholder="Select Product Type ..">
+					<span class="font-size">{{$select.selected}}</span></ui-select-match> <ui-select-choices
+						repeat="PT in createRequest.productTypeList  | filter: $select.search track by $index">
+					<span data-ng-bind="PT"></span></ui-select-choices> </ui-select>
+					
+					<!-- <input type="text" class="form-control input-style"
+						name="productType"
+						data-ng-model="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.productType"
+						data-typeahead-editable="true"
+						data-typeahead="LNN for LNN in createRequest.productTypeList | filter:$viewValue | limitTo:8"
+						data-ng-pattern="" autocomplete="off"
+						data-ng-maxlength="createRequest.maxInputlength"
+						data-ng-required="createRequest.required"
+						data-ng-change="validateMandatory('generalClinicalSafetyForm')"
+						data-ng-disabled="formulaRelatedFlag"></input> -->
+					<!-- 					<div data-ng-show="generalClinicalSafetyForm.productType.$invalid" style="color: red">Select from list</div>
+ -->
+				</div>
+				 <div class="col-sm-2 col-md-4 col-lg-4">
+                                </div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-4 col-md-3 col-lg-3">End User<span
+					class="glyphicon glyphicon-asterisk ast-color"></span></label>
+				<div class="col-sm-6 col-md-5 col-lg-5">
+					<ui-select id="productType" data-ng-disabled="formulaRelatedFlag || disableAIFields"
+						data-ng-model="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.endUser" data-ng-required="createRequest.required">
+					<ui-select-match allow-clear="true" placeholder="Select End User ..">
+					<span class="font-size">{{$select.selected}}</span></ui-select-match> <ui-select-choices
+						repeat="EU in createRequest.endUserList  | filter: $select.search track by $index">
+					<span data-ng-bind="EU"></span></ui-select-choices> </ui-select>
+					
+					<!-- <input type="text" class="form-control input-style" name="endUser"
+						data-ng-model="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.endUser"
+						data-typeahead-editable="false"
+						data-typeahead="LNN for LNN in createRequest.endUserList | filter:$viewValue | limitTo:8"
+						data-ng-pattern="" autocomplete="off"
+						data-ng-maxlength="createRequest.maxInputlength"
+						data-ng-required="createRequest.required"
+						data-ng-change="validateMandatory('generalClinicalSafetyForm')"
+						data-ng-disabled="formulaRelatedFlag"></input> -->
+					<!--<div data-ng-show="generalClinicalSafetyForm.endUser.$invalid" style="color: red">Select from list</div>
+ -->
+				</div>
+				 <div class="col-sm-2 col-md-4 col-lg-4">
+                                </div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-4 col-md-3 col-lg-3">
+					<label class="control-label">Safety Related Claims</label>
+				</div>
+				<div class="col-sm-6 col-md-5 col-lg-5 ">
+				<div class="well">
+				<label>Select all that apply</label>
+				<div class="form-group mg-0">
+						<input type="checkbox" style="margin-top: -5px"
+							data-checklist-model="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.safetyRelatedClaims"
+							data-checklist-value="'None'" data-ng-disabled="disableAIFields"
+							data-ng-click="createRequest.checkListSearch(createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.safetyRelatedClaims)">None</input>
+					</div>
+					<div class="form-group mg-0"
+						data-ng-repeat="value in createRequest.safetyClaimsList" data-ng-if="value!='None'">
+						<input type="checkbox" style="margin-top: -5px"
+							data-checklist-model="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.safetyRelatedClaims"
+							data-checklist-value="value"
+							data-ng-click="createRequest.checkListSearch(createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.safetyRelatedClaims)"
+							data-ng-disabled="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.safetyRelatedClaims[0]=='None' || disableAIFields">{{value}}</input>
+					</div>
+					<div data-ng-if="status">
+						<input id="safetyClaims" class="form-control" type="text"
+							name="safetyClaims" placeholder="Enter Safety Claims .."
+							data-ng-disabled="disableAIFields"
+							data-ng-model="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.otherSafetyRelatedClaims"
+							data-ng-maxlength="createRequest.maxInputlength" autocomplete="off"
+							data-ng-change="createRequest.validateMaxLengthCheck(generalClinicalSafetyForm.safetyClaims.$error.maxlength, 'safetyClaims');"></input>
+
+					</div>
+					<div
+						data-ng-show="generalClinicalSafetyForm.safetyClaims.$error.maxlength"
+						style="color: red">Maximum length of
+						{{createRequest.maxInputlength}} character exceeded.</div>
+				</div>
+					
+				</div>
+				 <div class="col-sm-2 col-md-4 col-lg-4">
+                                </div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-4 col-md-3 col-lg-3">Similar Products</label>
+				<div class="col-sm-6 col-md-5 col-lg-5">
+					<div class="btn-group wd-100">
+						<button type="button" class="btn ButtonDefault wd-50"
+							data-ng-disabled="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.similarProducts == true || disableAIFields"
+							data-ng-class="{'Region-Select':createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.similarProducts == value}"
+							data-ng-repeat="value in createRequest.yesNoList"
+							data-ng-click="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.similarProducts = value;validationCheck('RI');">{{value}}</button>
+					</div>
+				</div>
+				 <div class="col-sm-2 col-md-4 col-lg-4">
+                                </div>
+			</div>
+			<div data-ng-if="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.similarProducts == 'No'" 
+			data-ng-init="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.associatedChassis = '';createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.associatedAPR='';"></div>
+			<div class="form-group"
+				data-ng-show="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.similarProducts =='Yes'">
+				<label class="control-label col-sm-4 col-md-3 col-lg-3">Associated Chassis</label>
+				<div class="col-sm-6 col-md-5 col-lg-5">
+					<!-- <input type="text" class="form-control input-style"
+						name="associatedChassis"
+						data-ng-model="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.associatedChassis"
+						data-typeahead-editable="false"
+						data-typeahead="AC for AC in createRequest.associatedChassisList | filter:$viewValue | limitTo:8"
+						data-ng-pattern="" autocomplete="off" data-ng-change="validateMandatory('generalClinicalSafetyForm')"></input> -->
+					<input id="associatedChassis" type="text"
+						class="form-control input-style" name="associatedChassis"
+						data-ng-maxlength="createRequest.maxInputlength" autocomplete="off"
+						data-ng-disabled="disableAIFields"
+						data-ng-model="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.associatedChassis"
+						data-ng-change="createRequest.validateMaxLengthCheck(generalClinicalSafetyForm.associatedChassis.$error.maxlength, 'associatedChassis')"></input>
+					<div
+						data-ng-show="generalClinicalSafetyForm.associatedChassis.$error.maxlength"
+						style="color: red">Maximum length of
+						{{createRequest.maxInputlength}} character exceeded.</div>
+				</div>
+				 <div class="col-sm-2 col-md-4 col-lg-4">
+                                </div>
+			</div>
+			<div class="form-group"
+				data-ng-show="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.similarProducts =='Yes'">
+				<label class="control-label col-sm-4 col-md-3 col-lg-3">Associated APR</label>
+				<div class="col-sm-6 col-md-5 col-lg-5">
+					<!-- <input type="text" class="form-control input-style"
+						name="associatedAPR"
+						data-ng-model="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.associatedAPR"
+						data-typeahead-editable="true"
+						data-typeahead="APR for APR in createRequest.associatedAPRList | filter:$viewValue | limitTo:8"
+						data-ng-pattern="" autocomplete="off" data-ng-change="validateMandatory('generalClinicalSafetyForm')"></input> -->
+					<input id="associatedAPR" type="text"
+						class="form-control input-style" name="associatedAPR"
+						data-ng-maxlength="createRequest.maxInputlength" autocomplete="off" 
+						data-ng-disabled="disableAIFields"
+						data-ng-model="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.associatedAPR"
+						data-ng-change="createRequest.validateMaxLengthCheck(generalClinicalSafetyForm.associatedAPR.$error.maxlength, 'associatedAPR')"></input>
+					<div
+						data-ng-show="generalClinicalSafetyForm.associatedAPR.$error.maxlength"
+						style="color: red">Maximum length of
+						{{createRequest.maxInputlength}} character exceeded.</div>
+				</div>
+				 <div class="col-sm-2 col-md-4 col-lg-4">
+                                </div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-3">Supporting Document</label> <!-- Attach
+					HRIPT, CIT, PA, PT, Hot safety reports -->
+				<div class="col-sm-6 col-md-5 col-lg-5">
+					<div class="input-group wd-100">
+						<input type="text" class="form-control" disabled="disabled"
+							placeholder="Filename Description"></input> <span
+							class="input-group-addon" data-type="btn">Add File</span>
+					</div>
+					<div>
+						<img src="{{createRequest.buttonsection.image}}"></img> <span>Attach
+							Another File</span>
+					</div>
+				</div>
+				 <div class="col-sm-2 col-md-4 col-lg-4">
+                                </div>
+			</div>
+
+			<div class="form-group">
+				<label class="control-label col-sm-4 col-md-3 col-lg-3">New INCI to JnJ?<span
+					class="glyphicon glyphicon-asterisk ast-color"></span></label>
+				<div class="col-sm-6 col-md-5 col-lg-5">
+					<div class="btn-group wd-100">
+						<button type="button" class="btn ButtonDefault wd-50"
+							data-ng-disabled="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.newINCItoJnJ == true || disableAIFields"
+							data-ng-class="{'Region-Select':createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.newINCItoJnJ == value}"
+							data-ng-repeat="value in createRequest.yesNoList"
+							data-ng-click="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.newINCItoJnJ = value;">{{value}}</button>
+					</div>
+				</div>
+				 <div class="col-sm-2 col-md-4 col-lg-4">
+                                </div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-4 col-md-3 col-lg-3">Trade Name<span
+					class="glyphicon glyphicon-asterisk ast-color"></span></label>
+				<div class="col-sm-6 col-md-5 col-lg-5">
+					<!-- <input type="text" class="form-control input-style" name="tradeName"
+						data-ng-model="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.tradeName"
+						data-typeahead-editable="true"
+						data-typeahead="trade for trade in createRequest.tradeNameList | filter:$viewValue | limitTo:8"
+						data-ng-pattern="" autocomplete="off" data-ng-change="validateMandatory('generalClinicalSafetyForm')" data-ng-maxlength="createRequest.maxInputlength" data-ng-required="createRequest.required"></input>
+				<div data-ng-show="generalClinicalSafetyForm.tradeName.$invalid" style="color: red">Select from list</div> -->
+
+					<input class="form-control" type="text" name="tradeName"
+						placeholder="Enter Trade Name .."
+						data-ng-model="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.tradeName"
+						data-ng-disabled="disableAIFields"
+						data-ng-maxlength="createRequest.maxInputlength"
+						data-ng-change="createRequest.validateMaxLengthCheck(generalClinicalSafetyForm.tradeName.$error.maxlength, 'tradeName');"
+						data-ng-required="true" autocomplete="off"></input>
+					<div
+						data-ng-show="generalClinicalSafetyForm.tradeName.$error.maxlength"
+						style="color: red">Maximum length of
+						{{createRequest.maxInputlength}} character exceeded.</div>
+				</div>
+				 <div class="col-sm-2 col-md-4 col-lg-4">
+                                </div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-4 col-md-3 col-lg-3">Fragnance<span
+					class="glyphicon glyphicon-asterisk ast-color"></span></label>
+				<div class="col-sm-6 col-md-5 col-lg-5">
+					<div class="btn-group wd-100">
+						<button type="button" class="btn ButtonDefault wd-33"
+							data-ng-disabled="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.fragrance == true || disableAIFields"
+							data-ng-class="{'Region-Select':createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.fragrance == value}"
+							data-ng-repeat="value in createRequest.fragnanceList"
+							data-ng-click="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.fragrance = value;validationCheck('RI');">{{value}}</button>
+					</div>
+				</div>
+				<div data-ng-if="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.fragrance != 'Existing'" 
+			data-ng-init="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.concentrationTested = '';"></div>
+			</div>
+			<div class="form-group"
+				data-ng-if="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.fragrance == 'Existing'">
+				<label class="control-label col-sm-3">Concentration Tested<span
+					class="glyphicon glyphicon-asterisk ast-color"></span></label>
+				<div class="col-sm-6 col-md-5 col-lg-5">
+					<input type="text" class="form-control input-style"
+						name="concentrationTesting" data-ng-disabled="disableAIFields"
+						data-ng-maxlength="createRequest.maxInputlength"
+						data-ng-model="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.concentrationTested"
+						data-ng-change="createRequest.validateMaxLengthCheck(generalClinicalSafetyForm.concentrationTesting.$error.maxlength, 'concentrationTesting');"
+						required="required" autocomplete="off"></input>
+					<div
+						data-ng-show="generalClinicalSafetyForm.concentrationTesting.$error.maxlength"
+						style="color: red">Maximum length of
+						{{createRequest.maxInputlength}} character exceeded.</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-4 col-md-3 col-lg-3">RTR Number</label>
+				<div class="col-sm-6 col-md-5 col-lg-5">
+					<ui-select multiple="multiple" class="ui-select" name="rtr" data-ng-disabled="disableAIFields"
+						ng-model="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.rtrNumber">
+					<ui-select-match allow-clear="true" placeholder="Select RTR Number...">
+					<span>{{$item | removeSpaces}}</span></ui-select-match> <ui-select-choices
+						repeat="rtr in createRequest.rtrList | filter: $select.search">
+					{{rtr| removeSpaces}} </ui-select-choices> </ui-select>
+				</div>
+				 <div class="col-sm-2 col-md-4 col-lg-4">
+                                </div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-4 col-md-3 col-lg-3">Lead Reviewer<span
+					class="glyphicon glyphicon-asterisk ast-color"></span></label>
+				<div class="col-sm-6 col-md-5 col-lg-5">
+					<ui-select id="leadReviewer"
+						ui-select-required="leadReviewerFlag"
+						data-ng-disabled = "!disableAIFields"
+						data-ng-model="createRequest.RCRRequest.ClinicalLeadReviewer">
+					<ui-select-match allow-clear="true" placeholder="Select a Lead Reviewer ..">
+					<span class="font-size">{{$select.selected.displayName}}</span></ui-select-match> <ui-select-choices
+						repeat="LR in createRequest.leadReviewer | filter: $select.search">
+					<span data-ng-bind="LR.displayName"></span></ui-select-choices> </ui-select>
+				</div>
+				 <div class="col-sm-2 col-md-4 col-lg-4">
+                                </div>
+			</div>
+			<!-- Sophia Testing -->
+			<div data-ng-if="((createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.sofiaTestFlag=='true')&amp;&amp;(createRequest.setAccessFlag == 'requestor'))">
+		        <div data-ng-include="'/cg510_rcr_createrequest/Core/html/formulationReview/sophiaTest.xhtml'"></div>
+		    </div>
+			<!-- <div class="form-group">
+				<label class="control-label col-sm-3">Attachments</label>
+				<div class="col-sm-5">
+					<div class="input-group wd-100">
+						<input type="text" class="form-control" disabled="disabled" placeholder="Filename Description"></input>
+						<span class="input-group-addon" type="btn">Add File</span>
+					</div>
+					<div>
+						<img src="{{createRequest.buttonsection.image}}"></img> <span>Attach Another File</span>
+					</div>
+				</div>
+			</div>	 -->
+		</div>
+	</form>
+</div>

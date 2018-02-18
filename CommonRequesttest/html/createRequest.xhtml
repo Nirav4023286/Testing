@@ -1,0 +1,27 @@
+<div data-ng-controller="createrequestController as createRequest"
+	data-ng-init="createRequest.setViewOnRole();createRequest.datePickerInit()">
+	<div data-ng-show="isSetTab(1)">
+		<div class="col-sm-8 col-md-8 col-lg-8">
+			<div id="requestor"
+				data-ng-if="createRequest.setAccessFlag == 'requestor'">
+				<div
+					data-ng-include="'/cg510_rcr_createrequest/Core/html/requestor/requestor.xhtml'"></div>
+			</div>
+			<div id="clinicalAssessor"
+				data-ng-if="createRequest.setAccessFlag == 'clinicalAssessor'">
+				<div
+					data-ng-include="'/cg510_rcr_createrequest/Core/html/clinicalAssessor/clinicalAssessor.xhtml'"></div>
+			</div>
+			<div id="clinicalCoordinator"
+				data-ng-if="createRequest.setAccessFlag == 'coordinator'">
+				<div
+					data-ng-include="'/cg510_rcr_createrequest/Core/html/clinicalCoordinator/clinicalCoordinator.xhtml'"></div>
+			</div>
+			<div id="leadReviewer"
+				data-ng-if="createRequest.setAccessFlag == 'leadReviewer'">
+				<div
+					data-ng-include="'/cg510_rcr_createrequest/Core/html/clinicalLeadReviewer/leadReviewer.xhtml'"></div>
+			</div>
+		</div>
+	</div>
+</div>

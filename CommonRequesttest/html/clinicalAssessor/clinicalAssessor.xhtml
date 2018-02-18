@@ -1,0 +1,537 @@
+<div data-ng-controller="createrequestController as createRequest"
+	data-ng-init="createRequest.init();createRequest.convertBackToString();">
+	<form name="acknowledgeRequestForm" novalidate="">
+		<div id="parentDiv" style="height: 450px; overflow-y: auto; overflow-x: hidden;">
+
+			<!-- ******************** Acknowledge Request ******************** -->
+			<div id="acknowledgeRequest" class="panel panel-default target"
+				data-ng-show="clinicalAssessorFlag">
+
+				<div class="panel-body">
+					<div class="row mr-0">
+						<div class="CreateSectionHeader col-sm-10">Acknowledge
+							Request</div>
+						<div class="col-sm-2">
+							<span class="glyphicon glyphicon-asterisk ast-color"></span>
+							Required Field
+						</div>
+					</div>
+
+					<div id="ackReq"
+						data-ng-hide="createRequest.getBoolean(createRequest.RCRRequest.AcknowledgeInfoCA.isACKCA)">
+						<div class="form-group row">
+							<label class="control-label col-sm-3">Clinical Assessor<span
+								class="glyphicon glyphicon-asterisk ast-color"></span>
+							</label>
+							<div class="btn-group col-sm-5">
+								<button type="button" class="btn btn-default ackButtons"
+									data-ng-show="!reassign"
+									data-ng-class="{'Region-Select':'Acknowledge Request' == createRequest.CAAckValue}"
+									data-ng-click="createRequest.CAAckValue = 'Acknowledge Request';acknowledgeView=false;query=''">Acknowledge
+									Request</button>
+								<button type="button"
+									class="btn btn-default dropdown-toggle ackButtons"
+									data-toggle="dropdown"
+									data-ng-click="createRequest.CAAckValue = 'Reassign To';createRequest.clearAcknowledgeSection(createRequest.RCRRequest);"
+									data-ng-class="{'Region-Select':'Reassign To' == createRequest.CAAckValue}"
+									id="dropdownMenu1">
+									Reassign To<span class="caret" style="margin-left: 10px;"></span>
+								</button>
+								<ul class="dropdown-menu" role="menu"
+									aria-labelledby="dropdownMenu1"
+									style="margin-left: 45%; width: 70%; height: auto; max-height: 200px; overflow-y: auto;">
+									<li>
+										<div class="inner-addon right-addon">
+											<input type="text" class="form-control"
+												placeholder="Clinical Assessor" data-ng-model="query"
+												data-ng-click="$event.stopPropagation()"></input>
+										</div>
+									</li>
+									<li
+										data-ng-repeat='ca in createRequest.spliceUser(createRequest.caList) | filter:query'><a
+										href="#"
+										data-ng-click="createRequest.reAssignClinical(ca, 'assessor')">
+											{{ca.displayName}} </a></li>
+									<li><a
+										data-ng-click="createRequest.reassignToGroup(createRequest.RCRRequest,'Clinical Assessor')">Release
+											To Group</a></li>
+								</ul>
+							</div>
+						</div>
+						<ng-form name="acknowledgeEditForm" novalidate="">
+						<div
+							data-ng-if="createRequest.CAAckValue == 'Acknowledge Request' &amp;&amp; !(acknowledgeView)">
+							<div class="form-group row">
+								<label class="control-label col-sm-3">Commitment Date<span
+									class="glyphicon glyphicon-asterisk ast-color"></span></label>
+								<div class="dropdown col-sm-5">
+									<div class="dropdown-toggle" id="dropdown2" role="button"
+										data-toggle="dropdown" data-target="#" href="#">
+										<div class="input-group" style="cursor:pointer">
+											<input type="text" class="form-control"
+												value="{{createRequest.RCRRequest.AcknowledgeInfoCA.commitmentDate | date:'dd-MMM-yyyy'}}"
+												data-ng-disabled="true"><span
+												class="input-group-addon"><i
+												class="glyphicon glyphicon-calendar"></i></span> </input>
+										</div>
+									</div>
+									<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+										<datetimepicker
+											data-ng-model="createRequest.RCRRequest.AcknowledgeInfoCA.commitmentDate"
+											required="required"
+											data-datetimepicker-config="{ dropdownSelector: '#dropdown2',startView:'day', minView:'day' }"
+											data-before-render="startDateBeforeRender($dates)"></datetimepicker>
+									</ul>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="control-label col-sm-3">Comments</label>
+								<div class="col-sm-5">
+									<textarea class="form-control" id="Comments" name="commentName"
+										placeholder="Enter Comments" rows="5"
+										data-ng-model="createRequest.RCRRequest.AcknowledgeInfoCA.comment"
+										data-ng-maxlength="createRequest.maxInputArealength"
+										autocomplete="off"></textarea>
+									<p
+										data-ng-show="acknowledgeEditForm.commentName.$error.maxlength"
+										class="help-block">Maximum length of
+										{{createRequest.maxInputArealength}} character exceeded.</p>
+								</div>
+							</div>
+							<div class="col-sm-offset-6">
+								<button type="button" class="jj_primary_button"
+									data-ng-disabled="acknowledgeEditForm.$invalid"
+									data-ng-click="createRequest.acknowledgeRequest(createRequest.RCRRequest);">I'm
+									On</button>
+								<button type="button" class="jj_secondary_button"
+									data-ng-click="createRequest.clearAcknowledgeSection(createRequest.RCRRequest);createRequest.CAAckValue=''">Cancel</button>
+							</div>
+						</div>
+						</ng-form>
+						<!-- <ng-form name="acknowledgeReassignForm">
+						<div
+							data-ng-if="createRequest.reassignValue == 'Reassign Clinical Assessor'">
+							<div class="form-group row">
+								<label class="control-label col-sm-3">Reassign Clinical
+									Assessor </label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control input-style"
+										name="clinicalAssessor" required="required"
+										data-ng-model="createRequest.RCRRequest.ClinicalAssessor"
+										data-typeahead-editable="false"
+										value="createRequest.RCRRequest.ClinicalAssessor.displayName"
+										data-typeahead="ca as ca.displayName for ca in createRequest.caList | filter:$viewValue | limitTo:8"
+										data-ng-pattern="" autocomplete="off"></input>
+									<div
+										data-ng-show="requestInformationForm.clinicalAssessor.$invalid"
+										style="color: red">Select from List</div>
+								</div>
+							</div>
+							<div class="col-sm-offset-6">
+								<button type="button" class="jj_primary_button"
+									data-ng-disabled="requestInformationForm.clinicalAssessor.$invalid"
+									data-ng-click="createRequest.reassign()">Reassign</button>
+								<button type="button" class="jj_secondary_button"
+									data-ng-click="clearAcknowledgeSection();value = ''">Cancel</button>
+							</div>
+						</div>
+						</ng-form> -->
+					</div>
+
+					<div
+						data-ng-show="createRequest.getBoolean(createRequest.RCRRequest.AcknowledgeInfoCA.isACKCA)">
+						<div class="form-group row">
+							<label class="control-label col-sm-3">Clinical Assessor<span
+								class="glyphicon glyphicon-asterisk ast-color"></span></label>
+							<div class="col-sm-5 pd-top-7">
+								<span>{{createRequest.RCRRequest.ClinicalAssessor.displayName}}</span>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="control-label col-sm-3">Commitment Date<span
+								class="glyphicon glyphicon-asterisk ast-color"></span></label>
+							<div class="col-sm-5 pd-top-7">
+								<span>{{createRequest.RCRRequest.AcknowledgeInfoCA.commitmentDate
+									| date:'dd-MMM-yyyy'}}</span>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="control-label col-sm-3">Comment</label>
+							<div class="col-sm-5 pd-top-7">
+								<pre class="cutomPreTag textWrap"
+									style="white-space: normal; font-size: 14px;"
+									data-ng-text-truncate="createRequest.convertToString(createRequest.RCRRequest.AcknowledgeInfoCA.comment)"
+									data-ng-tt-no-toggling="" data-ng-tt-chars-threshold="200"
+									title="{{createRequest.convertToString(createRequest.RCRRequest.AcknowledgeInfoCA.comment)}}"></pre>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- ******************** Request Information ******************** -->
+			<div id="requestInfoCA" class="panel panel-default target">
+				<div class="panel-body">
+					<div class="row mr-0">
+						<div class="CreateSectionHeader col-sm-10">Request
+							Information</div>
+						<div class="col-sm-2">
+							<span class="glyphicon glyphicon-asterisk ast-color"></span>
+							Required Field
+						</div>
+					</div>
+					<div id="reqInfo">
+						<div
+							data-ng-include="'/cg510_rcr_createrequest/Core/html/requestInformationViewPage.xhtml'"></div>
+						<!-- <div data-ng-if="!(viewFlag)"
+							data-ng-include="'/cg510_rcr_createrequest/Core/html/requestInformation.xhtml'"></div> -->
+					</div>
+				</div>
+			</div>
+
+			<!-- ******************** Assessment Information ******************** -->
+			<div id="assessInfoCA" class=" panel panel-default target">
+				<div class="panel-body">
+					<div class="row mr-0">
+						<div class="CreateSectionHeader col-sm-10">Assessment
+							Information</div>
+						<div class="col-sm-2">
+							<span class="glyphicon glyphicon-asterisk ast-color"></span>
+							Required Field
+						</div>
+					</div>
+					<div id="assessmentInfo">
+						<div
+							data-ng-include="'/cg510_rcr_createrequest/Core/html/formulationReview/formulationReview.xhtml'"></div>
+						<!-- <div
+								data-ng-include="'/cg510_rcr_createrequest/Core/html/formulationReview/generalClinicalSafetyViewPage.xhtml'"></div> -->
+
+						<!-- ******************** Additional Fields for CA ******************** -->
+						<div id="editAdditionalFields" data-ng-if="!viewFlag">
+							<div class="form-group row">
+								<label class="control-label col-sm-3">Big Data Compliant<span
+									class="glyphicon glyphicon-asterisk ast-color"></span></label>
+								<div class="col-sm-5">
+									<div class="btn-group wd-100">
+										<button type="button" class="btn ButtonDefault wd-50"
+											data-ng-disabled="createRequest.RCRRequest.AcknowledgeInfoCA.bigDataComplaint == true"
+											data-ng-class="{'Region-Select':createRequest.RCRRequest.AcknowledgeInfoCA.bigDataComplaint == value}"
+											data-ng-repeat="value in createRequest.CAYesNoButtons"
+											data-ng-click="createRequest.RCRRequest.AcknowledgeInfoCA.bigDataComplaint = value;">{{value}}</button>
+									</div>
+								</div>
+								<div class="col-sm-2"
+									data-ng-init="(createRequest.RCRRequest.AcknowledgeInfoCA.bigDataComplaint == 'Does not apply')?createRequest.RCRRequest.AcknowledgeInfoCA.bigDataComplaint=true:''">
+									<input type="checkbox" style="margin-top: 14px;"
+										data-ng-model="createRequest.RCRRequest.AcknowledgeInfoCA.bigDataComplaint"
+										autocomplete="off"> </input><span
+										style="position: absolute; top: 13px;">Does not apply</span>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="control-label col-sm-3">Escalation
+									Required<span class="glyphicon glyphicon-asterisk ast-color"></span>
+								</label>
+								<div class="col-sm-5">
+									<div class="btn-group wd-100">
+										<button type="button" class="btn ButtonDefault wd-50"
+											data-ng-disabled="createRequest.RCRRequest.AcknowledgeInfoCA.escalationRequired == true"
+											data-ng-class="{'Region-Select':createRequest.RCRRequest.AcknowledgeInfoCA.escalationRequired == value}"
+											data-ng-repeat="value in createRequest.CAYesNoButtons"
+											data-ng-click="createRequest.RCRRequest.AcknowledgeInfoCA.escalationRequired = value;createRequest.RCRRequest.AcknowledgeInfoCA.reasonsForEscalation=''"
+											data-ng-model="createRequest.RCRRequest.AcknowledgeInfoCA.escalationRequired">{{value}}</button>
+									</div>
+								</div>
+								<div class="col-sm-2"
+									data-ng-init="(createRequest.RCRRequest.AcknowledgeInfoCA.escalationRequired == 'Does not apply')?createRequest.RCRRequest.AcknowledgeInfoCA.escalationRequired=true:''">
+									<input type="checkbox" style="margin-top: 14px;"
+										autocomplete="off"
+										data-ng-model="createRequest.RCRRequest.AcknowledgeInfoCA.escalationRequired">
+									</input><span style="position: absolute; top: 13px;">Does not
+										apply</span>
+								</div>
+							</div>
+							<!-- <div class="form-group row" data-ng-init="createRequest.RCRRequest.AcknowledgeInfoCA.escalationRequired"
+								data-ng-if="createRequest.RCRRequest.AcknowledgeInfoCA.escalationRequired=='No'">
+							</div> -->
+							<div class="form-group row"
+								data-ng-if="createRequest.RCRRequest.AcknowledgeInfoCA.escalationRequired=='Yes'">
+								<label class="control-label col-sm-3">Reasons for
+									Escalation<span class="glyphicon glyphicon-asterisk ast-color"></span>
+								</label>
+								<div class="col-sm-5"
+									data-ng-if="(createRequest.RCRRequest.AcknowledgeInfoCA.escalationRequired=='Yes')">
+									<textarea class="form-control" id="reasonsForEscalation"
+										name="reasonsForEscalation" placeholder="Enter Comments"
+										rows="5" required="required"
+										data-ng-model="createRequest.RCRRequest.AcknowledgeInfoCA.reasonsForEscalation"
+										data-ng-maxlength="createRequest.maxInputArealength"
+										autocomplete="off"></textarea>
+									<p
+										data-ng-show="acknowledgeRequestForm.reasonsForEscalation.$error.maxlength"
+										class="help-block">Maximum length of
+										{{createRequest.maxInputArealength}} character exceeded.</p>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="control-label col-sm-4 col-md-3 col-lg-3">Safety
+									Testing</label>
+								<div class="col-sm-6 col-md-5 col-lg-5">
+									<div class="btn-group wd-100">
+
+										<!-- Safety testing in general clinical safety -->
+										<button type="button" class="btn ButtonDefault wd-50"
+											data-ng-class="{'Region-Select':createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.safetyTesting == value}"
+											data-ng-repeat="value in createRequest.yesNoList"
+											data-ng-click="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.safetyTesting = value;createRequest.RCRRequest.AcknowledgeInfoCA.typeOfTests=[]"
+											data-ng-if="(createRequest.RCRRequest.AssessmentInformation.assessmentSubType=='General Clinical Safety')">{{value}}</button>
+
+										<!-- Safety testing in earlyclinical safety -->
+										<button type="button" class="btn ButtonDefault wd-50"
+											data-ng-class="{'Region-Select':createRequest.RCRRequest.AssessmentInformation.earlyClinicalSafety.safetyTesting == value}"
+											data-ng-repeat="value in createRequest.yesNoList"
+											data-ng-click="createRequest.RCRRequest.AssessmentInformation.earlyClinicalSafety.safetyTesting = value;createRequest.RCRRequest.AcknowledgeInfoCA.typeOfTests=[]"
+											data-ng-if="(createRequest.RCRRequest.AssessmentInformation.assessmentSubType=='Early Clinical Safety')">{{value}}</button>
+										<!-- validateMandatory('generalClinicalSafetyForm') -->
+									</div>
+								</div>
+							</div>
+							<div class="form-group row"
+								data-ng-show="(createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.safetyTesting=='Yes' || createRequest.RCRRequest.AssessmentInformation.earlyClinicalSafety.safetyTesting=='Yes')">
+								<label class="control-label col-sm-3">Type of Tests<span
+									class="glyphicon glyphicon-asterisk ast-color"></span></label>
+								<div class="col-sm-5">
+									<ui-select class="ui-select"
+										data-ng-model="createRequest.RCRRequest.AcknowledgeInfoCA.typeOfTests"
+										multiple="multiple"> <ui-select-match
+										allow-clear="true" placeholder="Select Test Type(s) ..">
+									<span>{{$item}}</span></ui-select-match> <ui-select-choices
+										repeat="TT in createRequest.testTypes | filter: $select.search track by $index">
+									<span class="font-size">{{TT}}</span></ui-select-choices> </ui-select>
+								</div>
+							</div>
+						</div>
+
+						<!-- View Page -->
+						<div id="viewAdditionalFields" data-ng-if="viewFlag">
+							<div class="form-group row">
+								<label class="control-label col-sm-3">Big Data Compliant<span
+									class="glyphicon glyphicon-asterisk ast-color"></span></label>
+								<div class="col-sm-5 pd-top-7">
+												<span data-ng-bind="(createRequest.RCRRequest.AcknowledgeInfoCA.bigDataComplaint == true || createRequest.RCRRequest.AcknowledgeInfoCA.bigDataComplaint == 'true')?createRequest.RCRRequest.AcknowledgeInfoCA.bigDataComplaint='Does not apply':createRequest.RCRRequest.AcknowledgeInfoCA.bigDataComplaint"></span>
+								
+									<!-- <span>{{createRequest.RCRRequest.AcknowledgeInfoCA.bigDataComplaint}}</span> -->
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="control-label col-sm-3">Escalation
+									Required<span class="glyphicon glyphicon-asterisk ast-color"></span>
+								</label>
+								<div class="col-sm-5 pd-top-7">
+									<span data-ng-bind="(createRequest.RCRRequest.AcknowledgeInfoCA.escalationRequired == true || createRequest.RCRRequest.AcknowledgeInfoCA.escalationRequired == 'true')?createRequest.RCRRequest.AcknowledgeInfoCA.escalationRequired='Does not apply':createRequest.RCRRequest.AcknowledgeInfoCA.escalationRequired"></span>
+									<!-- <span>{{createRequest.RCRRequest.AcknowledgeInfoCA.escalationRequired}}</span> -->
+								</div>
+							</div>
+							<div class="form-group row"
+								data-ng-if="(createRequest.RCRRequest.AcknowledgeInfoCA.escalationRequired=='Yes')">
+								<label class="control-label col-sm-3">Reasons for
+									Escalation<span class="glyphicon glyphicon-asterisk ast-color"></span>
+								</label>
+								<div class="col-sm-5 pd-top-7">
+									<pre class="cutomPreTag textWrap"
+										style="white-space: normal; font-size: 14px;"
+										data-ng-text-truncate="createRequest.convertToString(createRequest.RCRRequest.AcknowledgeInfoCA.reasonsForEscalation)"
+										data-ng-tt-no-toggling="" data-ng-tt-chars-threshold="200"
+										title="{{createRequest.convertToString(createRequest.RCRRequest.AcknowledgeInfoCA.reasonsForEscalation)}}"></pre>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="control-label col-sm-3">Safety Testing</label>
+								<div class="col-sm-5 pd-top-7"
+									data-ng-if="(createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.safetyTesting!=='' &amp;&amp;createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.safetyTesting!==null)">
+									<span>{{createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.safetyTesting}}</span>
+								</div>
+								<div class="col-sm-5 pd-top-7"
+									data-ng-if="(createRequest.RCRRequest.AssessmentInformation.earlyClinicalSafety.safetyTesting!==''&amp;&amp;createRequest.RCRRequest.AssessmentInformation.earlyClinicalSafety.safetyTesting!==null)">
+									<span>{{createRequest.RCRRequest.AssessmentInformation.earlyClinicalSafety.safetyTesting}}</span>
+								</div>
+							</div>
+							<div class="form-group row"
+								data-ng-if="(createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.safetyTesting=='Yes')">
+								<label class="control-label col-sm-3">Type of Tests<span
+									class="glyphicon glyphicon-asterisk ast-color"></span>
+								</label>
+								<div class="col-sm-5 pd-top-7">
+									<span class="textWrap"
+										data-ng-text-truncate="createRequest.convertToString(createRequest.RCRRequest.AcknowledgeInfoCA.typeOfTests)"
+										data-ng-tt-no-toggling="" data-ng-tt-chars-threshold="200"
+										title="{{createRequest.convertToString(createRequest.RCRRequest.AcknowledgeInfoCA.typeOfTests)}}"></span>
+								</div>
+							</div>
+							<div class="form-group row"
+								data-ng-if="(createRequest.RCRRequest.AssessmentInformation.earlyClinicalSafety.safetyTesting=='Yes')">
+								<label class="control-label col-sm-3">Type of Tests<span
+									class="glyphicon glyphicon-asterisk ast-color"></span>
+								</label>
+								<div class="col-sm-5 pd-top-7">
+									<span class="textWrap"
+										data-ng-text-truncate="createRequest.convertToString(createRequest.RCRRequest.AcknowledgeInfoCA.typeOfTests)"
+										data-ng-tt-no-toggling="" data-ng-tt-chars-threshold="200"
+										title="{{createRequest.convertToString(createRequest.RCRRequest.AcknowledgeInfoCA.typeOfTests)}}"></span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- ******************** Comments/Background Information ******************** -->
+			<div id="commentsCA" class="panel panel-default target"
+				data-ng-show="clinicalAssessorFlag">
+				<ng-form name="commentsBackForm">
+				<div class="panel-body">
+					<div class="row mr-0">
+						<div class="CreateSectionHeader col-sm-10">Comments/Background</div>
+						<div class="col-sm-2">
+							<span class="glyphicon glyphicon-asterisk ast-color"></span>
+							Required Field
+						</div>
+					</div>
+					<div data-ng-hide="CACommentBackgroundView">
+						<div class="form-group row">
+							<label class="control-label col-sm-3 col-md-3 col-lg-3">Safety
+								Assessment<span class="glyphicon glyphicon-asterisk ast-color"></span>
+							</label>
+							<div class="col-sm-5 col-md-5 col-lg-5">
+								<select class="form-control" id="safetyAssessment"
+									data-ng-required="required"
+									data-ng-model="createRequest.RCRRequest.AcknowledgeInfoCA.safetyBackground"
+									data-ng-options="type for type in createRequest.safetyAssessmentList">
+									<option value="">Select safety Assessment..</option>
+								</select>
+							</div>
+							<div class="col-sm-4 col-md-4 col-lg-4" style="top: 10px;">
+								<label>Requested By:</label> <span class="txt-right"
+									data-ng-text-truncate="createRequest.RCRRequest.Requestor.displayName"
+									data-ng-tt-chars-threshold="30" data-ng-tt-no-toggling=""
+									title="{{createRequest.RCRRequest.Requestor.displayName}}"></span>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="control-label col-sm-3 col-md-3 col-lg-3">Comments/
+								Background<span class="glyphicon glyphicon-asterisk ast-color"></span>
+							</label>
+							<div class="col-sm-5">
+								<textarea class="form-control" name="commentBackground"
+									placeholder="Enter Comments" rows="5"
+									data-ng-model="createRequest.RCRRequest.AcknowledgeInfoCA.commentBackground"
+									data-ng-maxlength="3000" required="required"></textarea>
+								<p
+									data-ng-show="commentsBackForm.commentBackground.$error.maxlength"
+									class="help-block">Maximum length of 3000 character
+									exceeded.</p>
+							</div>
+						</div>
+						<div class="col-sm-offset-6">
+							<button type="button" class="jj_primary_button"
+								data-ng-disabled="!((caCommentBackgroundFlag &amp;&amp; AICAFlag) &amp;&amp; RICAFlag)"
+								data-ng-click="createRequest.completeAssessmentCA(createRequest.RCRRequest);">Assessment
+								Completed</button>
+						</div>
+					</div>
+				</div>
+				</ng-form>
+				<div data-ng-show="CACommentBackgroundView">
+					<div class="form-group row" style="margin-left: 0px">
+						<label class="control-label col-sm-3">Safety Assessment<span
+							class="glyphicon glyphicon-asterisk ast-color"></span></label>
+						<div class="col-sm-5 pd-top-7">
+							<span>{{createRequest.RCRRequest.AcknowledgeInfoCA.safetyBackground}}</span>
+						</div>
+					</div>
+					<div class="form-group row" style="margin-left: 0px">
+						<label class="control-label col-sm-3">Comments/ Background<span
+							class="glyphicon glyphicon-asterisk ast-color"></span></label>
+						<div class="col-sm-5 pd-top-7">
+							<pre class="cutomPreTag textWrap"
+								style="white-space: normal; font-size: 14px;"
+								data-ng-text-truncate="createRequest.convertToString(createRequest.RCRRequest.AcknowledgeInfoCA.commentBackground)"
+								data-ng-tt-no-toggling="" data-ng-tt-chars-threshold="200"
+								title="{{createRequest.convertToString(createRequest.RCRRequest.AcknowledgeInfoCA.commentBackground)}}"></pre>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- ********** Right tab section ************* -->
+		<div class="col-sm-4 col-md-4 col-lg-4 navbar navbar-fixed-top"
+			style="margin: 25% 67%;">
+			<div class="rightSection">
+				<ul class="listStyle nav nav-pills nav-stacked">
+					<li class="acknowledgeRequest" data-ng-show="clinicalAssessorFlag"
+						data-ng-click="scroll('#acknowledgeRequest')"
+						data-ng-class="(activeTab=='#acknowledgeRequest'||activeTab==undefined) ? 'active-status' : ''">Acknowledge
+						Request<span
+						data-ng-show="createRequest.getBoolean(createRequest.RCRRequest.AcknowledgeInfoCA.isACKCA)"
+						class="glyphicon glyphicon-ok" style="float: right;"></span>
+					</li>
+					<li class="requestInfoCA" data-ng-click="scroll('#requestInfoCA')"
+						data-ng-class="(activeTab=='#requestInfoCA') ? 'active-status' : ''">Verify
+						Request Information<span data-ng-show="RICAFlag"
+						class="glyphicon glyphicon-ok" style="float: right;"></span>
+					</li>
+					<li class="assessInfoCA" data-ng-click="scroll('#assessInfoCA')"
+						data-ng-class="(activeTab=='#assessInfoCA') ? 'active-status' : ''">Verify
+						Assessment Information<span data-ng-show="AICAFlag"
+						class="glyphicon glyphicon-ok" style="float: right;"></span>
+					</li>
+					<li class="commentsCA" data-ng-click="scroll('#commentsCA')"
+						data-ng-show="clinicalAssessorFlag"
+						data-ng-class="(activeTab=='#commentsCA') ? 'active-status' : ''">Comments/
+						Background<span data-ng-show="caCommentBackgroundFlag"
+						class="glyphicon glyphicon-ok" style="float: right;"></span>
+					</li>
+				</ul>
+			</div>
+			<div style="float: right;"
+				data-ng-if="approvedFlag">
+				<div data-ng-if="hideButtons">
+					<button class="jj_primary_button" data-ng-if="!viewFlag"
+						data-ng-disabled="acknowledgeRequestForm.reasonsForEscalation.$error.maxlength || commentsBackForm.commentBackground.$error.maxlength"
+						data-ng-click="createRequest.saveRCR(createRequest.RCRRequest);">Save</button>
+					<button class="jj_primary_button"
+						data-ng-if="viewFlag &amp;&amp; clinicalAssessorFlag"
+						data-ng-disabled="!createRequest.getBoolean(createRequest.RCRRequest.AcknowledgeInfoCA.isACKCA)"
+						data-ng-click="changeView();CACommentBackgroundView=false">Edit</button>
+					<button class="jj_primary_button" data-ng-disabled="!(RICAFlag)"
+					data-ng-hide="(createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.sofiaTestFlag=='true' || createRequest.RCRRequest.AssessmentInformation.earlyClinicalSafety.sofiaTestFlag=='true')"
+						data-ng-click="createRequest.submitForSofhiaInfo(createRequest.RCRRequest);"
+						data-ng-if="(createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.safetyTesting=='Yes'||createRequest.RCRRequest.AssessmentInformation.earlyClinicalSafety.safetyTesting=='Yes')">Submit</button>
+					<button class="jj_secondary_button" data-target="#RequestInfo"
+						data-toggle="modal"
+						data-ng-if="createRequest.getBoolean(createRequest.RCRRequest.AcknowledgeInfoCA.isACKCA)">Request
+						Info</button>
+					<button class="jj_secondary_button"
+						data-ng-if="createRequest.getBoolean(createRequest.RCRRequest.AcknowledgeInfoCA.isACKCA)"
+						data-ng-click="createRequest.cancel(createRequest.RCRRequest)">Cancel</button>
+					</div>
+
+			</div>
+		</div>
+	</form>
+	<div class="modal" role="dialog" style="text-align: left !important;"
+		id="RequestInfo" tabindex="-1">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Request Additional Info</h4>
+				</div>
+				<div class="modal-body">
+					<div
+						data-ng-include="'/cg510_rcr_createrequest/Core/html/requestInfo.xhtml'"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

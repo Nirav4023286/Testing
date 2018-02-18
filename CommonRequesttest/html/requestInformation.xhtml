@@ -1,0 +1,370 @@
+<div data-ng-init="createRequest.datePickerInit();">
+	<form name="requestInformationForm" novalidate="">
+		<div class="form-horizontal">
+			<div class="form-group">
+				<label class="control-label col-sm-4 col-md-3 col-lg-3">Requestor's
+					Name<span class="glyphicon glyphicon-asterisk ast-color"></span>
+				</label>
+				<div class="input-group col-sm-6 col-md-5 col-lg-5 Group">
+					<input name="RequestorName" type="text" class="form-control"
+						data-ng-disabled="true"
+						data-ng-model="createRequest.RCRRequest.Requestor.displayName"></input><span
+						class="input-group-addon"><i
+						class="glyphicon glyphicon-user"></i></span>
+				</div>
+				<div class="col-sm-2 col-md-4 col-lg-4"></div>
+
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-4 col-md-3 col-lg-3">Requestor's
+					Email<span class="glyphicon glyphicon-asterisk ast-color"></span>
+				</label>
+				<div class="input-group col-sm-6 col-md-5 col-lg-5 Group">
+					<input type="email" class="form-control" name="RequestorEmailName"
+						data-ng-disabled="true"
+						data-ng-model="createRequest.RCRRequest.Requestor.email"></input><span
+						class="input-group-addon"><i
+						class="glyphicon glyphicon-envelope"></i></span>
+				</div>
+				<div class="col-sm-2 col-md-4 col-lg-4"></div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-4 col-md-3 col-lg-3">Requestor's
+					Region<span class="glyphicon glyphicon-asterisk ast-color"></span>
+				</label>
+				<div class="input-group col-sm-6 col-md-5 col-lg-5 Group">
+					<input type="text" class="form-control" name="RequestorRegionName"
+						data-ng-disabled="true"
+						data-ng-model="createRequest.RCRRequest.Requestor.region"></input><span
+						class="input-group-addon"><i
+						class="glyphicon glyphicon-globe"></i></span>
+				</div>
+				<div class="col-sm-2 col-md-4 col-lg-4"></div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-4 col-md-3 col-lg-3">Date
+					Submitted</label>
+				<div class="input-group col-sm-6 col-md-5 col-lg-5 Group">
+					<span class="form-control" data-ng-disabled="true">{{createRequest.RCRRequest.RequestInformation.submittedDate
+						| date:'dd-MMM-yyyy'}}</span><span class="input-group-addon"><i
+						class="glyphicon glyphicon-calendar"></i></span>
+				</div>
+				<div class="col-sm-2 col-md-4 col-lg-4"></div>
+
+			</div>
+			<!-- 	 <div class="form-group">
+				<label class="control-label col-sm-3">Due Date</label>
+				<div class="input-group col-sm-5 Group">
+					<span class="form-control" data-ng-disabled="true">{{dueDate
+						| date :'dd-MMM-yyyy'}}</span><span class="input-group-addon"><i
+						class="glyphicon glyphicon-calendar"></i></span>
+					<div class="input-group date" id="dueDatepicker"
+						data-provide="dueDatepicker">
+						<input type="text" class="form-control" id="dueDatepicker1" data-ng-model="dueDate" onkeydown="return false"></input>
+						<div class="input-group-addon">
+							<span class="glyphicon glyphicon-calendar"></span>
+						</div>
+					</div>
+				</div>
+			</div>   -->
+			<!-- data-ng-disabled="(createRequest.RCRRequest.RequestInformation.projectStatus!='New')" -->
+			<div class="form-group">
+				<label class="control-label col-sm-3">Due Date</label>
+				<div class="dropdown  col-sm-5">
+					<div class="dropdown-toggle" id="dropdown2" role="button"
+						data-toggle="dropdown" data-target="#" href="#">
+						<div class="input-group" style="cursor:pointer"
+							data-ng-click="createRequest.disableDate(createRequest.RCRRequest.RequestInformation.projectStatus, $event)">
+							<input type="text" class="form-control" data-ng-disabled="true"
+								value="{{createRequest.RCRRequest.RequestInformation.dueDate | date:'dd-MMM-yyyy'}}" ></input>
+							<div class="input-group-addon">
+								<span class="glyphicon glyphicon-calendar"></span>
+							</div>
+							<div class="input-group-addon">
+								<span
+									title="{{createRequest.dueDateInfoMsg}}"><i
+									class="glyphicon glyphicon-info-sign"></i></span>
+							</div>
+						</div>
+					</div>
+					<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+						<datetimepicker
+							data-ng-model="createRequest.RCRRequest.RequestInformation.dueDate"
+							data-datetimepicker-config="{ dropdownSelector: '#dropdown2',startView:'day', minView:'day' }"
+							data-before-render="startDateBeforeRender($dates)"></datetimepicker>
+					</ul>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-sm-10 col-md-8 col-lg-8">
+					<hr></hr>
+				</div>
+				<div class="col-sm-2 col-md-4 col-lg-4"></div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-4 col-md-3 col-lg-3">Clinical
+					Assessor </label>
+				<div class="col-sm-6 col-md-5 col-lg-5">
+					<!-- on-select="changeToxicologist(createRequest.RCRRequest.ClinicalAssessor.displayName)" -->
+					<ui-select id="clinicalAssessor"
+						data-ng-model="createRequest.RCRRequest.ClinicalAssessor"
+						data-ng-disabled="(createRequest.RCRRequest.RequestInformation.projectStatus!='New')">
+					<ui-select-match allow-clear="true"
+						placeholder="Select a Clinical Assessor .."> <span
+						class="font-size">{{$select.selected.displayName}}</span></ui-select-match> <ui-select-choices
+						repeat="ca in createRequest.caList | filter: $select.search">
+					<span data-ng-bind="ca.displayName"></span></ui-select-choices> </ui-select>
+
+					<!-- ui-select-required="clinicalAssessorFlag" -->
+					<!-- <ui-select data-ng-model="createRequest.RCRRequest.ClinicalAssessor.displayName"
+					on-select="changeCA(createRequest.RCRRequest.ClinicalAssessor.displayName)"> <ui-select-match
+					placeholder="Select a Clinical Assessor .."> <span
+					class="font-size">{{$select.selected.displayName}}</span></ui-select-match> <ui-select-choices
+					repeat="ca in caList | filter: $select.search">
+				<span data-ng-bind="ca.displayName"></span></ui-select-choices> </ui-select>
+
+					<input type="text" class="form-control input-style"
+						name="clinicalAssessor"
+						data-ng-model="createRequest.RCRRequest.ClinicalAssessor"
+						data-typeahead-editable="false" value="createRequest.RCRRequest.ClinicalAssessor.displayName"
+						data-typeahead="ca as ca.displayName for ca in createRequest.caList | filter:$viewValue | limitTo:8"
+						data-ng-pattern="" autocomplete="off"></input>
+					<div data-ng-show="requestInformationForm.clinicalAssessor.$invalid" style="color: red">Select from List</div> -->
+				</div>
+				<div class="col-sm-2 col-md-4 col-lg-4"></div>
+			</div>
+			<div class="form-group"
+				data-ng-if="createRequest.RCRRequest.ClinicalAssessor.ntId == '' || createRequest.RCRRequest.ClinicalAssessor.ntId == undefined">
+				<label class="control-label col-sm-4 col-md-3 col-lg-3">Co-ordinator
+				</label>
+				<div class="col-sm-6 col-md-5 col-lg-5">
+					<span>{{createRequest.RCRRequest.ClinicalCoordinator.displayName}}</span>
+				</div>
+				<div class="col-sm-2 col-md-4 col-lg-4"></div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-sm-10 col-md-8 col-lg-8">
+					<hr></hr>
+				</div>
+				<div class="col-sm-2 col-md-4 col-lg-4"></div>
+			</div>
+
+
+			<!-- 	<hr></hr> -->
+			<div class="form-group">
+				<div class="col-sm-4 col-md-3 col-lg-3">
+					<label>This is a R&amp;D Link Project </label>
+				</div>
+				<div class="col-sm-6 col-md-5 col-lg-5">
+					<div class="checkbox" style="padding-top: 0px;">
+						<input type="checkbox" data-ng-disabled="disable"
+							style="height: 20px; width: 20px;"
+							data-ng-model="createRequest.RCRRequest.RequestInformation.isRnD"
+							data-ng-click="createRequest.RCRRequest.RequestInformation.projectName = ''; validationCheck('RI')"
+							autocomplete="off"></input>
+					</div>
+				</div>
+				<div class="col-sm-2 col-md-4 col-lg-4"></div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-4 col-md-3 col-lg-3">Project
+					Name</label>
+				<div class="col-sm-6 col-md-5 col-lg-5"
+					data-ng-show="createRequest.RCRRequest.RequestInformation.isRnD == true">
+					<ui-select id="projectName"
+						data-ng-model="createRequest.RCRRequest.RequestInformation.projectName">
+					<ui-select-match allow-clear="true" placeholder="Select Project ..">
+					<span class="font-size">{{$select.selected}}</span></ui-select-match> <ui-select-choices
+						repeat="PN in createRequest.projectNameList1  | filter: $select.search track by $index">
+					<span data-ng-bind="PN"></span></ui-select-choices> </ui-select>
+					<!-- <input type="text" class="form-control input-style "
+						data-ng-model="createRequest.RCRRequest.RequestInformation.projectName"
+						data-typeahead="PN for PN in createRequest.projectNameList1 | filter:$viewValue | limitTo:8"
+						data-ng-pattern="" autocomplete="off"></input> -->
+				</div>
+				<div class="col-sm-6 col-md-5 col-lg-5"
+					data-ng-show="!(createRequest.RCRRequest.RequestInformation.isRnD == true)">
+					<input name="projectName" type="text" class="form-control"
+						data-ng-model="createRequest.RCRRequest.RequestInformation.projectName"
+						data-ng-disabled="disable" autocomplete="off"
+						data-ng-maxlength="createRequest.maxInputlength"
+						data-ng-change="createRequest.validateMaxLengthCheck(requestInformationForm.projectName.$error.maxlength, 'projectName');"></input>
+
+					<p
+						data-ng-show="requestInformationForm.projectName.$error.maxlength"
+						class="help-block">Maximum length of
+						{{createRequest.maxInputlength}} character exceeded.</p>
+				</div>
+				<div class="col-sm-2 col-md-4 col-lg-4"></div>
+
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-4 col-md-3 col-lg-3">Region<span
+					class="glyphicon glyphicon-asterisk ast-color"></span></label>
+				<div class="col-sm-6 col-md-5 col-lg-5">
+					<div class="btn-group wd-100">
+						<button type="button" class="btn ButtonDefault wd-50"
+							data-ng-disabled="disable"
+							data-ng-class="{'Region-Select':createRequest.RCRRequest.RequestInformation.region == value}"
+							data-ng-repeat="value in createRequest.regionList"
+							data-ng-click="createRequest.RCRRequest.RequestInformation.region = value;createRequest.buttonValidator(); validateMandatory('requestInformationForm')">{{value}}</button>
+					</div>
+				</div>
+				<div class="col-sm-2 col-md-4 col-lg-4"></div>
+			</div>
+			<!-- <div class="form-group"
+				data-ng-show="createRequest.RCRRequest.RequestInformation.region == 'Global'">
+				<div class="col-sm-4 col-md-3 col-lg-3"></div>
+				<div class="col-sm-6 col-md-5 col-lg-5 well">
+					<label>Select all that apply</label>
+					<div class="form-group mg-0"
+						data-ng-repeat="value in createRequest.regList">
+						<input type="checkbox"
+							data-checklist-model="createRequest.RCRRequest.RequestInformation.additionalRegion"
+							data-checklist-value="value" data-ng-click=" validateMandatory('requestInformationForm')"><span>{{value}}</span></input>
+					</div>
+					<div class="form-group mg-0">
+						<label>Specify Lead Region :</label>
+						<div>
+							<ui-select data-ng-model="createRequest.RCRRequest.RequestInformation.leadRegion"
+							data-ng-disabled="disable"
+							on-select="leadRegionChange();validationCheck('RI');"
+							required="required"> <ui-select-match
+							placeholder="Select a Lead Region .."> <span>{{$select | removeSpaces}}</span></ui-select-match> <ui-select-choices
+							repeat=" re in createRequest.regList | filter: $select.search">
+							<span data-ng-bind="re"></span></ui-select-choices> </ui-select>
+							<input type="text" class="form-control input-style"
+								name="leadRegiontName"
+								data-ng-model="createRequest.RCRRequest.RequestInformation.leadRegion"
+								data-typeahead-editable="false"
+								data-typeahead="reg for reg in createRequest.regList | filter:$viewValue | limitTo:8"
+								data-ng-pattern="" autocomplete="off"
+								data-ng-maxlength="createRequest.maxInputlength"
+								data-ng-change="validateMaxLength('requestInformationForm');  validateMandatory('requestInformationForm')"></input>
+							<div data-ng-show="requestInformationForm.leadRegiontName.$invalid" style="color: red">Select from List</div>
+						</div>
+					</div>
+				</div>
+				 <div class="col-sm-2 col-md-4 col-lg-4">
+                                </div>
+			</div> -->
+			<div class="form-group"
+				data-ng-if="createRequest.RCRRequest.RequestInformation.region == 'Global'"
+				data-ng-init="createRequest.RCRRequest.RequestInformation.additionalRegion=[];createRequest.RCRRequest.RequestInformation.leadRegion=''">
+			</div>
+			<div class="form-group"
+				data-ng-if="createRequest.RCRRequest.RequestInformation.region == 'Regional'">
+				<div class="col-sm-4 col-md-3 col-lg-3"></div>
+				<div class="col-sm-6 col-md-5 col-lg-5">
+					<div class="form-group mg-0">
+						<label>Specify Lead Region :</label>
+						<div>
+							<ui-select
+								data-ng-model="createRequest.RCRRequest.RequestInformation.leadRegion"
+								data-ng-disabled="disable" required="required"
+								data-ng-click="createRequest.emptyAdditionalRegion()">
+							<ui-select-match allow-clear="true"
+								placeholder="Select a Lead Region .."> <span
+								class="font-size">{{$select.selected}}</span></ui-select-match> <ui-select-choices
+								repeat=" region in createRequest.regList | filter: $select.search">
+							<span data-ng-bind="region"></span></ui-select-choices> </ui-select>
+						</div>
+					</div>
+					<div class="form-group mg-0">
+						<label>Additional Region :</label>
+						<div>
+							<ui-select
+								data-ng-model="createRequest.RCRRequest.RequestInformation.additionalRegion"
+								data-ng-disabled="disable || (createRequest.RCRRequest.RequestInformation.leadRegion == '')"
+								multiple="multiple"> <ui-select-match
+								allow-clear="true" placeholder="Select Additional Region(s) ..">
+							<span>{{$item}}</span></ui-select-match> <ui-select-choices
+								ui-disable-choice="createRequest.RCRRequest.RequestInformation.leadRegion == reg"
+								repeat="reg in createRequest.regList | filter: $select.search">
+							{{reg | removeSpaces}} </ui-select-choices> </ui-select>
+						</div>
+					</div>
+					<!-- <div>
+							<input type="text" class="form-control input-style"
+								name="globalLeadRegionName"
+								data-ng-model="createRequest.RCRRequest.RequestInformation.leadRegion"
+								data-typeahead-editable="false"
+								data-typeahead="reg for reg in createRequest.regList | filter:$viewValue | limitTo:8"
+								data-ng-pattern="" autocomplete="off"
+								data-ng-maxlength="createRequest.maxInputlength"
+								data-ng-change="validateMaxLength('requestInformationForm'); validateMandatory('requestInformationForm')"></input>
+							<div data-ng-show="requestInformationForm.globalLeadRegionName.$invalid" style="color: red">Select from List</div>
+						</div> 
+					</div>-->
+				</div>
+				<div class="col-sm-2 col-md-4 col-lg-4"></div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-4 col-md-3 col-lg-3">Direct
+					Import<span class="glyphicon glyphicon-asterisk ast-color"></span>
+				</label>
+				<div class="col-sm-6 col-md-5 col-lg-5">
+					<div class="btn-group wd-100">
+						<button type="button" class="btn ButtonDefault wd-50"
+							data-ng-disabled="disable"
+							data-ng-class="{'Region-Select':createRequest.RCRRequest.RequestInformation.directImport == value}"
+							data-ng-repeat="value in createRequest.directImportList"
+							data-ng-click="createRequest.RCRRequest.RequestInformation.directImport = value;validationCheck('RI');  validateMandatory('requestInformationForm')">{{value}}</button>
+					</div>
+				</div>
+				<div class="col-sm-2 col-md-4 col-lg-4"></div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-4 col-md-3 col-lg-3">Product
+					Development<span class="glyphicon glyphicon-asterisk ast-color"></span>
+				</label>
+				<div class="col-sm-6 col-md-5 col-lg-5">
+					<div class="btn-group wd-100">
+						<button type="button" class="btn ButtonDefault wd-33"
+							data-ng-disabled="disable"
+							data-ng-repeat="value in createRequest.productDevelopment"
+							data-ng-class="{'ProductDevelopment-Select':createRequest.RCRRequest.RequestInformation.productDevelopment == value}"
+							data-ng-click="createRequest.RCRRequest.RequestInformation.productDevelopment = value;validationCheck('RI'); validateMandatory('requestInformationForm')">{{value}}</button>
+					</div>
+				</div>
+				<div class="col-sm-2 col-md-4 col-lg-4"></div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-4 col-md-3 col-lg-3">Franchise<span
+					class="glyphicon glyphicon-asterisk ast-color"></span></label>
+				<div class="col-sm-6 col-md-5 col-lg-5">
+					<select class="form-control" id="AssessmentSubType"
+						data-ng-model="createRequest.RCRRequest.RequestInformation.franchise"
+						data-ng-options="frachise for frachise in createRequest.franchiseList"
+						data-ng-required="true"
+						data-ng-change="validateMandatory('requestInformationForm')">
+						<option value="">Select Franchise ..</option>
+					</select>
+					<!-- <ui-select data-ng-model="createRequest.RCRRequest.RequestInformation.franchise"
+					on-select="changeFranchise(createRequest.RCRRequest.RequestInformation.franchise)"> <ui-select-match
+					placeholder="Select Franchise .."> <span
+					class="font-size">{{$select.selected}}</span></ui-select-match> <ui-select-choices
+					repeat="FA in createRequest.franchiseList | filter: $select.search">
+				<span data-ng-bind="FA.displayName"></span></ui-select-choices> </ui-select> -->
+				</div>
+				<div class="col-sm-2 col-md-4 col-lg-4"></div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-4 col-md-3 col-lg-3">Brand</label>
+				<div class="col-sm-6 col-md-5 col-lg-5">
+					<ui-select multiple="multiple" class="ui-select"
+						ng-model="createRequest.RCRRequest.RequestInformation.Brand">
+					<ui-select-match allow-clear="true" placeholder="Select Brand...">
+					<span>{{$item | removeSpaces}}</span></ui-select-match> <ui-select-choices
+						repeat="brand in createRequest.brandList | filter: $select.search track by $index">
+					{{brand | removeSpaces}} </ui-select-choices> </ui-select>
+				</div>
+				<div class="col-sm-2 col-md-4 col-lg-4"></div>
+			</div>
+		</div>
+	</form>
+</div>
+
+

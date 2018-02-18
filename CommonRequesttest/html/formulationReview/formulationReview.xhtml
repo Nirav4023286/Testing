@@ -1,0 +1,15 @@
+<div data-ng-init="init()">
+<div data-ng-if ="createRequest.RCRRequest.AssessmentInformation.assessmentSubType=='General Clinical Safety'">
+ <div data-ng-if="!(viewFlag)"
+   data-ng-include="'/cg510_rcr_createrequest/Core/html/formulationReview/generalClinicalSefety.xhtml'"></div>
+ <div data-ng-if="viewFlag"
+   data-ng-include="'/cg510_rcr_createrequest/Core/html/formulationReview/generalClinicalSafetyViewPage.xhtml'"></div>
+ </div>
+ 
+ <div data-ng-if ="createRequest.RCRRequest.AssessmentInformation.assessmentSubType =='Early Clinical Safety'">
+  <div data-ng-if="!(viewFlag)" 
+    data-ng-include="'/cg510_rcr_createrequest/Core/html/formulationReview/earlyClinincalSafety.xhtml'"></div>
+  <div data-ng-if="viewFlag"
+   data-ng-include="'/cg510_rcr_createrequest/Core/html/formulationReview/earlyClinicalSafetyViewPage.xhtml'"></div>
+ </div>
+</div>

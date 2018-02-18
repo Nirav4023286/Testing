@@ -1,0 +1,170 @@
+<div data-ng-init="createRequest.setViewOnRole()">
+	<form class="form-horizontal" name="InformationForm">
+		<div class="form-group row">
+			<label class="control-label col-sm-3">Assessment Type<span class="glyphicon glyphicon-asterisk ast-color"></span></label>
+			<div class="col-sm-5 pd-top-7">
+				<span>{{createRequest.RCRRequest.AssessmentInformation.assessmentType}}</span>
+			</div>
+		</div>
+		<div class="form-group row">
+			<label class="control-label col-sm-3">Sub-Type<span class="glyphicon glyphicon-asterisk ast-color"></span></label>
+			<div class="col-sm-5 pd-top-7">
+				<span>{{createRequest.RCRRequest.AssessmentInformation.assessmentSubType}}</span>
+			</div>
+		</div>
+		<hr></hr>
+		<div class="form-group row">
+			<label class="control-label col-sm-3">Human Testing</label>
+			<div class="col-sm-5 pd-top-7">
+				<span data-ng-bind="(createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.humanTesting == true || createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.humanTesting == 'true')?createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.humanTesting='Does not apply':createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.humanTesting"></span>
+			</div>
+		</div>
+		<div class="form-group row">
+			<label class="control-label col-sm-3">Length of Study</label>
+			<div class="col-sm-5 pd-top-7">
+				<span>{{createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.lengthOfStudy}}</span>
+			</div>
+		</div>
+		<hr></hr>
+		<div class="form-group row">
+			<label class="control-label col-sm-3">Formula ID Number<span class="glyphicon glyphicon-asterisk ast-color"></span></label>
+			<div class="col-sm-5 pd-top-7">
+				<span class="textWrap">{{createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.formulaIDNumber}}</span>
+			</div>
+		</div>
+		<div class="form-group row">
+			<label class="control-label col-sm-3">Lab Notebook Number</label>
+			<div class="col-sm-5 pd-top-7">
+				<span class="textWrap">{{createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.labNotebookNumber}}</span>
+			</div>
+		</div>
+		<div class="form-group row">
+			<label class="control-label col-sm-3">Product Name</label>
+			<div class="col-sm-5 pd-top-7">
+				<span class="textWrap">{{createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.productName}}</span>
+			</div>
+		</div>
+		<div class="form-group row">
+			<label class="control-label col-sm-3">Pre-Assessment</label>
+			<div class="col-sm-5 pd-top-7">
+				<span>{{createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.preAssessment}}</span>
+			</div>
+		</div>
+		<div class="form-group row">
+			<label class="control-label col-sm-3">Product Type<span class="glyphicon glyphicon-asterisk ast-color"></span></label>
+			<div class="col-sm-5 pd-top-7">
+				<span>{{createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.productType}}</span>
+			</div>
+		</div>
+		<div class="form-group row">
+			<label class="control-label col-sm-3">End User<span class="glyphicon glyphicon-asterisk ast-color"></span></label>
+			<div class="col-sm-5 pd-top-7">
+				<span>{{createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.endUser}}</span>
+			</div>
+		</div>
+		<div class="form-group row">
+			<div class="col-sm-3">
+			<label>Safety Related Claims</label>
+			</div>
+			<!-- <div class="col-sm-5">
+				<span>{{createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.safetyRelatedClaims}}</span>
+			</div> -->
+			<div class="col-sm-5">
+				<span
+					data-ng-text-truncate="createRequest.safetyChangeIndex(createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.safetyRelatedClaims)"
+					data-ng-tt-no-toggling="" data-ng-tt-chars-threshold="500"
+					title="{{createRequest.safetyChangeIndex(createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.safetyRelatedClaims)}}"></span>
+				<span data-ng-if="status" class="textWrap"> :
+					{{createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.otherSafetyRelatedClaims}}</span>
+					
+					
+				<!-- <span data-ng-text-truncate="createRequest.convertToString(createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.safetyRelatedClaims)"
+				data-ng-tt-no-toggling="" data-ng-tt-chars-threshold="100" title="{{createRequest.convertToString(createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.safetyRelatedClaims)}}"></span>
+				<div data-ng-if="status">
+					<label>Other Safety Related Claims:</label>
+					<div>
+						<span class="textWrap">{{createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.otherSafetyRelatedClaims}}</span>						
+					</div>
+
+				</div> -->
+			</div>
+			
+		</div>
+		<div class="form-group row">
+			<label class="control-label col-sm-3">Similar Products</label>
+			<div class="col-sm-5 pd-top-7">
+				<span>{{createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.similarProducts}}</span>
+			</div>
+		</div>
+		<div class="form-group row" data-ng-show="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.similarProducts =='Yes'">
+			<label class="control-label col-sm-3">Associated Chassis</label>
+			<div class="col-sm-5 pd-top-7">
+				<span class="textWrap">{{createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.associatedChassis}}</span>
+			</div>
+		</div>
+		<div class="form-group row" data-ng-show="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.similarProducts =='Yes'">
+			<label class="control-label col-sm-3">Associated APR</label>
+			<div class="col-sm-5 pd-top-7">
+				<span class="textWrap">{{createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.associatedAPR}}</span>
+			</div>
+		</div>
+		
+		<div class="form-group row">
+			<label class="control-label col-sm-3">Supporting Document</label>
+			<div class="col-sm-5">
+			</div>
+		</div>
+		<div class="form-group row">
+			<label class="control-label col-sm-3">New INCI to JnJ?<span class="glyphicon glyphicon-asterisk ast-color"></span></label>
+			<div class="col-sm-5 pd-top-7">
+				<span>{{createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.newINCItoJnJ}}</span>
+			</div>
+		</div>
+		<div class="form-group row">
+			<label class="control-label col-sm-3">Trade Name<span class="glyphicon glyphicon-asterisk ast-color"></span></label>
+			<div class="col-sm-5 pd-top-7">
+				<span class="textWrap">{{createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.tradeName}}</span>
+			</div>
+		</div>
+		<div class="form-group row">
+			<label class="control-label col-sm-3">Fragnance<span class="glyphicon glyphicon-asterisk ast-color"></span></label>
+			<div class="col-sm-5 pd-top-7">
+				<span class="textWrap">{{createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.fragrance}}</span>
+			</div>
+		</div>
+		<div class="form-group row" data-ng-show="createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.fragrance == 'Existing'">  
+		   <label class="control-label col-sm-3">Concentration Tested<span class="glyphicon glyphicon-asterisk ast-color"></span></label>     
+		   <div class="col-sm-5 pd-top-7">
+			    <span class="textWrap">{{createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.concentrationTested}}</span>
+		   </div>
+	  	</div>
+		<div class="form-group row">
+			<label class="control-label col-sm-3">RTR Number</label>
+			<div class="col-sm-5 pd-top-7">
+				<span class="textWrap" data-ng-text-truncate="createRequest.convertToString(createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.rtrNumber)"
+					data-ng-tt-no-toggling="" data-ng-tt-chars-threshold="100"
+					title="{{createRequest.convertToString(createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.rtrNumber)}}"></span>
+			</div>
+		</div>
+		<div class="form-group row">
+			<label class="control-label col-sm-3">Lead Reviewer<span class="glyphicon glyphicon-asterisk ast-color"></span></label>
+			<div class="col-sm-5 pd-top-7">				
+				<span>{{createRequest.RCRRequest.ClinicalLeadReviewer.displayName}}</span>
+			</div>
+		</div>
+		
+		
+		
+		<!-- Sophia Testing -->
+		<div
+			data-ng-if="((createRequest.RCRRequest.AssessmentInformation.generalClinicalSafety.sofiaTestFlag=='true')&amp;&amp;(createRequest.setAccessFlag == 'requestor'))">
+			<div
+				data-ng-include="'/cg510_rcr_createrequest/Core/html/formulationReview/sophiaTestViewPage.xhtml'"></div>
+		</div>
+		<!-- <div class="form-group row">
+			<label class="control-label col-sm-3">Attachments</label>
+			<div class="col-sm-5">
+			</div>
+		</div> -->
+	</form>
+</div>
